@@ -33,9 +33,11 @@ com\InfluencerMarketpalce\serverside\controller\InfluencerController.class
 com\InfluencerMarketpalce\serverside\controller\RegistController.class
 com\InfluencerMarketpalce\serverside\model\response\RegisterEmployeeRequest.class
 com\InfluencerMarketpalce\serverside\controller\JobController.class
+com\InfluencerMarketpalce\serverside\repository\BrandRepository.class
 com\InfluencerMarketpalce\serverside\model\response\ResponseListData.class
 com\InfluencerMarketpalce\serverside\model\response\ForgotPasswordRequest.class
 com\InfluencerMarketpalce\serverside\model\Job$JobBuilder.class
+com\InfluencerMarketpalce\serverside\model\Brand.class
 com\InfluencerMarketpalce\serverside\model\Job.class
 com\InfluencerMarketpalce\serverside\model\response\LoginRequestDto.class
 com\InfluencerMarketpalce\serverside\ServersideApplication.class

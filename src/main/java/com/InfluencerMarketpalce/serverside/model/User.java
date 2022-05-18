@@ -31,13 +31,8 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    @Id
-    @Column(name = "brand_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long brandId;
 
     @Column(name = "username")
     private String username;
@@ -53,7 +48,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = "user_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Brand brand;
 

@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tb_influencer")
+@Table(name = "tb_brand")
 public class Brand {
     @Id
-    @Column(name = "brand_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "fullname")

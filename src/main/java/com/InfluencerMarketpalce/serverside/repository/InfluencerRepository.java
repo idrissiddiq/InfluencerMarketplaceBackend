@@ -30,6 +30,9 @@ public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
     @Query(value = "SELECT COUNT(*) FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
     Long findEmail(String email);
 
+    @Query(value = "SELECT USER_ID FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
+    Long findIdByEmail(String email);
+
     @Query(value = "SELECT TB_INFLUENCER.EMPLOYEE_ID, EMAIL, FULLNAME, JOB_ID FROM TB_INFLUENCER JOIN employee_class \n"
             + "on employee_class.employee_id = tb_employee.employee_id\n"
             + "where employee_class.class_id =?1 AND job_id = 'P'", nativeQuery = true)
@@ -85,9 +88,6 @@ public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
 
     @Query(value = "SELECT PASSWORD FROM TB_USER WHERE USERNAME =? 1", nativeQuery = true)
     String getPassword(String username);
-
-    @Query(value = "SELECT TB_INFLUENCER FROM TB_EMPLOYEE WHERE EMAIL = ?1", nativeQuery = true)
-    Long findIdByEmail (String email);
     
     @Query(value = "SELECT EMAIL FROM TB_INFLUENCER WHERE USER_ID = ?1", nativeQuery = true)
     String findEmailById (Long id);
