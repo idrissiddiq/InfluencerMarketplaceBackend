@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  *
  * @author ASUS
- */@RestController
-@RequestMapping("/api")
+ */
+@RestController
+@RequestMapping("/api/login")
 public class LoginController {
     private LoginService loginService;
 
@@ -29,9 +30,15 @@ public class LoginController {
         this.loginService = loginService;
     }
     
-    @PostMapping("/login")
+    @PostMapping("/influencer")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequest){
         System.out.println(loginRequest.getUsername());
         return new ResponseEntity(loginService.login(loginRequest), HttpStatus.OK);
-    } 
+    }
+
+    @PostMapping("/brand")
+    public ResponseEntity<LoginResponseDto> loginBrand(@RequestBody LoginRequestDto loginRequest){
+        System.out.println(loginRequest.getUsername());
+        return new ResponseEntity(loginService.loginBrand(loginRequest), HttpStatus.OK);
+    }
 }

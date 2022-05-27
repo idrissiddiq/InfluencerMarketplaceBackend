@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Influencer {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "inflencer_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

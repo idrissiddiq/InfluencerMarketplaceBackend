@@ -5,12 +5,8 @@
  */
 package com.InfluencerMarketpalce.serverside.controller;
 
+import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.service.RegistService;
-import com.InfluencerMarketpalce.serverside.model.response.ForgotPasswordRequest;
-import com.InfluencerMarketpalce.serverside.model.response.RegisterEmployeeRequest;
-import com.InfluencerMarketpalce.serverside.model.response.RegisterEmployeeResponse;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Idris Siddiq
  */
 @RestController
-@RequestMapping("api/employee/register")
+@RequestMapping("api/register")
 public class RegistController {
     private RegistService registService;
     
@@ -34,9 +30,14 @@ public class RegistController {
         this.registService = registService;
     }
     
-    @PostMapping()
-    public ResponseMessage<RegisterEmployeeRequest> register(@RequestBody RegisterEmployeeRequest user) {
+    @PostMapping("/influencer")
+    public ResponseMessage<RegisterInfluencerRequest> register(@RequestBody RegisterInfluencerRequest user) {
         return registService.regist(user);
+    }
+
+    @PostMapping("/brand")
+    public ResponseMessage<RegisterBrandRequest> registerBrand(@RequestBody RegisterBrandRequest userBrand) {
+        return registService.registBrand(userBrand);
     }
 
 //    @PutMapping("setPassword/{username}")
@@ -45,7 +46,7 @@ public class RegistController {
 //    }
     
     @PutMapping("/{id}")
-    public ResponseMessage<RegisterEmployeeRequest> update(@RequestBody RegisterEmployeeRequest employee, @PathVariable Long id) {
+    public ResponseMessage<RegisterInfluencerRequest> update(@RequestBody RegisterInfluencerRequest employee, @PathVariable Long id) {
         return new ResponseMessage("Employee Updated!", registService.update(employee,id));
     }
     
@@ -56,7 +57,7 @@ public class RegistController {
     }
     
     @GetMapping("/{id}")
-    public ResponseData<RegisterEmployeeResponse> findById(@PathVariable Long id) {
+    public ResponseData<RegisterInfluencerResponse> findById(@PathVariable Long id) {
         return new ResponseData(registService.getById(id));
     }
 }

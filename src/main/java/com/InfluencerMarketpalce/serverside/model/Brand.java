@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tb_influencer")
+@Table(name = "tb_brand")
 public class Brand {
     @Id
     @Column(name = "brand_id")
@@ -25,18 +25,18 @@ public class Brand {
     @OneToOne(mappedBy = "brand", cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @PrimaryKeyJoinColumn
-    private User user;
+    private UserBrand userBrand;
 
     public Brand(){
 
     }
 
-    public Brand(Long id, String fullname, String email, Job brandjob, User user) {
+    public Brand(Long id, String fullname, String email, Job brandjob, UserBrand userBrand) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
         this.Brandjob = brandjob;
-        this.user = user;
+        this.userBrand = userBrand;
     }
 
     public Long getId() {
@@ -71,11 +71,11 @@ public class Brand {
         this.Brandjob = brandjob;
     }
 
-    public User getUser() {
-        return user;
+    public UserBrand getUser() {
+        return userBrand;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserBrand userBrand) {
+        this.userBrand = userBrand;
     }
 }

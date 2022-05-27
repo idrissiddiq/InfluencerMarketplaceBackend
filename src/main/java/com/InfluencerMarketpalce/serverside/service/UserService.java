@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Sendy
+ * @author Idris Siddiq
  */
 @Service
 public class UserService extends ResponseStatus {

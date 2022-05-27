@@ -5,19 +5,10 @@
  */
 package com.InfluencerMarketpalce.serverside.service;
 
-import com.InfluencerMarketpalce.serverside.model.Influencer;
-import com.InfluencerMarketpalce.serverside.model.Job;
-import com.InfluencerMarketpalce.serverside.model.Role;
-import com.InfluencerMarketpalce.serverside.model.User;
-import com.InfluencerMarketpalce.serverside.model.response.ForgotPasswordRequest;
-import com.InfluencerMarketpalce.serverside.model.response.RegisterEmployeeRequest;
-import com.InfluencerMarketpalce.serverside.model.response.RegisterEmployeeResponse;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
+import com.InfluencerMarketpalce.serverside.model.*;
+import com.InfluencerMarketpalce.serverside.model.response.*;
+import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
-import com.InfluencerMarketpalce.serverside.repository.InfluencerRepository;
-import com.InfluencerMarketpalce.serverside.repository.JobRepository;
-import com.InfluencerMarketpalce.serverside.repository.RoleRepository;
-import com.InfluencerMarketpalce.serverside.repository.UserRepository;
 
 import java.util.Optional;
 import java.util.Set;
@@ -33,7 +24,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistService extends ResponseStatus {
     private InfluencerRepository influencerRepository;
+    private BrandRepository brandRepository;
     private UserRepository userRepository;
+    private UserBrandRepository userBrandRepository;
     private JobRepository jobRepository;
     private PasswordEncoder encoder;
     private RoleRepository roleRepository;
@@ -41,9 +34,11 @@ public class RegistService extends ResponseStatus {
     
     
     @Autowired
-    public RegistService(InfluencerRepository influencerRepository, UserRepository userRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService) {
+    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService) {
         this.influencerRepository = influencerRepository;
+        this.brandRepository = brandRepository;
         this.userRepository = userRepository;
+        this.userBrandRepository = userBrandRepository;
         this.jobRepository = jobRepository;
         this.encoder = encoder;
         this.roleRepository = roleRepository;
@@ -56,18 +51,60 @@ public class RegistService extends ResponseStatus {
         return userRepository.save(user);
     }
 
+    public ResponseMessage<RegisterBrandRequest> registBrand(RegisterBrandRequest request) {
+        long temp = brandRepository.findEmail(request.getEmail());
+        if (temp >= 1) {
+            return new ResponseMessage<>("Error -  Email Already Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+        }
+        long tempUser = userBrandRepository.countByUsername(request.getUsername());
+        if (tempUser >= 1) {
+            return new ResponseMessage<>("Error -  Username Already Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+        }
+        Brand brand = new Brand();
+        brand.setId(request.getId());
+        brand.setFullname(request.getFullname());
+        brand.setEmail(request.getEmail());
+        Job job = jobRepository.findByIdJob(request.getJobId());
+        brand.setBrandjob(job);
+
+        UserBrand userBrand = new UserBrand();
+        userBrand.setBrand(brand);
+        userBrand.setId(request.getId());
+        userBrand.setUsername(request.getUsername());
+        int length = 10;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+
+        System.out.println("Hasil Generate : " + generatedString);
+        userBrand.setPassword(encoder.encode(generatedString));
+        Set<Role> temp_role = roleRepository.findByName("Influencer");
+        userBrand.setRoles(temp_role);
+//        if("P".equals(request.getJobId())){
+//            System.out.println("Masuk Peserta");
+//
+//        }
+//        else if("T".equals(request.getJobId())){
+//            Set<Role> temp_role = roleRepository.findByName("Trainer");
+//            user.setRoles(temp_role);
+//        }
+        brand.setUser(userBrand);
+        //emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
+        brandRepository.save(brand);
+        userBrandRepository.save(userBrand);
+        return new ResponseMessage<>("Brand Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), generatedString));
+    }
     
-    
-    public ResponseMessage<RegisterEmployeeRequest> regist(RegisterEmployeeRequest request) {
+    public ResponseMessage<RegisterInfluencerRequest> regist(RegisterInfluencerRequest request) {
         long temp = influencerRepository.findEmail(request.getEmail());
         if (temp >= 1) {
-            return new ResponseMessage<>("Error -  Email Already Registered", new RegisterEmployeeRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+            return new ResponseMessage<>("Error -  Email Already Registered", new RegisterInfluencerRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
         }
         long tempUser = userRepository.countByUsername(request.getUsername());
         if (tempUser >= 1) {
-            return new ResponseMessage<>("Error -  Username Already Registered", new RegisterEmployeeRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+            return new ResponseMessage<>("Error -  Username Already Registered", new RegisterInfluencerRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
         }
-       Influencer influencer = new Influencer();
+        Influencer influencer = new Influencer();
         influencer.setId(request.getId());
         influencer.setFullname(request.getFullname());
         influencer.setEmail(request.getEmail());
@@ -85,20 +122,21 @@ public class RegistService extends ResponseStatus {
 
         System.out.println("Hasil Generate : " + generatedString);
         user.setPassword(encoder.encode(generatedString));
-        if("P".equals(request.getJobId())){
-            System.out.println("Masuk Peserta");
-            Set<Role> temp_role = roleRepository.findByName("Peserta");
-            user.setRoles(temp_role);
-        }
-        else if("T".equals(request.getJobId())){
-            Set<Role> temp_role = roleRepository.findByName("Trainer");
-            user.setRoles(temp_role);
-        }
+        Set<Role> temp_role = roleRepository.findByName("Influencer");
+        user.setRoles(temp_role);
+//        if("P".equals(request.getJobId())){
+//            System.out.println("Masuk Peserta");
+//
+//        }
+//        else if("T".equals(request.getJobId())){
+//            Set<Role> temp_role = roleRepository.findByName("Trainer");
+//            user.setRoles(temp_role);
+//        }
         influencer.setUser(user);
         //emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
         influencerRepository.save(influencer);
         userRepository.save(user);
-        return new ResponseMessage<>("Influencer Registered", new RegisterEmployeeRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), generatedString));
+        return new ResponseMessage<>("Influencer Registered", new RegisterInfluencerRequest(request.getId(), request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), generatedString));
     }
     
     public ForgotPasswordRequest forgot(ForgotPasswordRequest request){
@@ -123,7 +161,7 @@ public class RegistService extends ResponseStatus {
         return new ForgotPasswordRequest(request.getEmail());
     }
     
-    public ResponseMessage<RegisterEmployeeRequest> update(RegisterEmployeeRequest request, Long id) {
+    public ResponseMessage<RegisterInfluencerRequest> update(RegisterInfluencerRequest request, Long id) {
         long temp_count = influencerRepository.findEmail(request.getEmail());
         String temp_email = influencerRepository.findEmailById(id);
         long tempCount = userRepository.countByUsername(request.getUsername());
@@ -133,10 +171,10 @@ public class RegistService extends ResponseStatus {
             throw dataNotFound();
         }
         if (temp_count >= 1 && request.getEmail() != temp_email){
-            return new ResponseMessage<>("Error - Email Already Registered" , new RegisterEmployeeRequest(request.getId(),request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+            return new ResponseMessage<>("Error - Email Already Registered" , new RegisterInfluencerRequest(request.getId(),request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
         }
         if (tempCount >= 1 && request.getUsername() != tempUser){
-            return new ResponseMessage<>("Error - Username Already Registered" , new RegisterEmployeeRequest(request.getId(),request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+            return new ResponseMessage<>("Error - Username Already Registered" , new RegisterInfluencerRequest(request.getId(),request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
         }
         Influencer influencer = new Influencer();
         influencer.setId(id);
@@ -164,10 +202,10 @@ public class RegistService extends ResponseStatus {
         influencerRepository.save(influencer);
         userRepository.save(user);
         
-        return new ResponseMessage<>("Employee Updated" , new RegisterEmployeeRequest(request.getId(),request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
+        return new ResponseMessage<>("Employee Updated" , new RegisterInfluencerRequest(request.getId(),request.getFullname(), request.getEmail(), request.getJobId(), request.getUsername(), request.getPassword()));
     }
     
-    public RegisterEmployeeResponse getById(Long id) {
+    public RegisterInfluencerResponse getById(Long id) {
         Optional<Influencer> temp = influencerRepository.findById(id);
         if (!temp.isPresent()) {
             throw dataNotFound();
@@ -177,6 +215,6 @@ public class RegistService extends ResponseStatus {
         influencer = influencerRepository.getById(id);
         User user = new User();
         user  = userRepository.getById(id);
-        return new RegisterEmployeeResponse(influencer.getId(),influencer.getFullname(), influencer.getEmail(), influencer.getJob(), user.getUsername(), user.getPassword());
+        return new RegisterInfluencerResponse(influencer.getId(),influencer.getFullname(), influencer.getEmail(), influencer.getJob(), user.getUsername(), user.getPassword());
     }
 }
