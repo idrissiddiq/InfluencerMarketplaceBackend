@@ -3,6 +3,7 @@ package com.InfluencerMarketpalce.serverside.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_brand")
@@ -27,16 +28,26 @@ public class Brand {
     @PrimaryKeyJoinColumn
     private UserBrand userBrand;
 
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Campaign> campaigns;
+
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Contract> contracts;
+
     public Brand(){
 
     }
 
-    public Brand(Long id, String fullname, String email, Job brandjob, UserBrand userBrand) {
+    public Brand(Long id, String fullname, String email, Job brandjob, UserBrand userBrand, Set<Campaign> campaigns, Set<Contract> contracts) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
-        this.Brandjob = brandjob;
+        Brandjob = brandjob;
         this.userBrand = userBrand;
+        this.campaigns = campaigns;
+        this.contracts = contracts;
     }
 
     public Long getId() {
@@ -68,14 +79,30 @@ public class Brand {
     }
 
     public void setBrandjob(Job brandjob) {
-        this.Brandjob = brandjob;
+        Brandjob = brandjob;
     }
 
-    public UserBrand getUser() {
+    public UserBrand getUserBrand() {
         return userBrand;
     }
 
-    public void setUser(UserBrand userBrand) {
+    public void setUserBrand(UserBrand userBrand) {
         this.userBrand = userBrand;
+    }
+
+    public Set<Campaign> getCampaigns() {
+        return campaigns;
+    }
+
+    public void setCampaigns(Set<Campaign> campaigns) {
+        this.campaigns = campaigns;
+    }
+
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
     }
 }

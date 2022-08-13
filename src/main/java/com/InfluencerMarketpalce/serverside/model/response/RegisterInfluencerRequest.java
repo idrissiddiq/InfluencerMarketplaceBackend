@@ -5,6 +5,8 @@
  */
 package com.InfluencerMarketpalce.serverside.model.response;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Sendy
@@ -17,23 +19,29 @@ public class RegisterInfluencerRequest {
     private String email;
 
     private String jobId;
+    private String city;
+    private LocalDate birthDate;
+    private String influenceType;
     private String username;
-    private String password;
 
-    public RegisterInfluencerRequest() {
-    }
 
-    public RegisterInfluencerRequest(Long id, String fullname, String email, String jobId, String username, String password) {
+    public RegisterInfluencerRequest(Long id, String fullname, String email, String jobId, String city, LocalDate birthDate, String influenceType, String username) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
         this.jobId = jobId;
+        this.city = city;
+        this.birthDate = birthDate;
+        this.influenceType = influenceType;
         this.username = username;
-        this.password = password;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullname() {
@@ -60,6 +68,30 @@ public class RegisterInfluencerRequest {
         this.jobId = jobId;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getInfluenceType() {
+        return influenceType;
+    }
+
+    public void setInfluenceType(String influenceType) {
+        this.influenceType = influenceType;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -68,15 +100,4 @@ public class RegisterInfluencerRequest {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    
-    
-    
 }

@@ -21,10 +21,6 @@ public class RegisterInfluencerResponse {
     private Job job;
     private String username;
     private String password;
-    
-    public RegisterInfluencerResponse(){
-        
-    }
 
     public RegisterInfluencerResponse(Long id, String fullname, String email, Job job, String username, String password) {
         this.id = id;

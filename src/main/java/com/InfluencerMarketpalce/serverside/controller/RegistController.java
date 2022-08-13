@@ -5,6 +5,8 @@
  */
 package com.InfluencerMarketpalce.serverside.controller;
 
+import com.InfluencerMarketpalce.serverside.model.request.ApproveContractRequest;
+import com.InfluencerMarketpalce.serverside.model.request.InfluencerChangePasswordRequest;
 import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.service.RegistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class RegistController {
     }
     
     @PostMapping("/influencer")
-    public ResponseMessage<RegisterInfluencerRequest> register(@RequestBody RegisterInfluencerRequest user) {
+    public ResponseMessage<RegisterInfluencerResponse> register(@RequestBody RegisterInfluencerRequest user) {
         return registService.regist(user);
     }
 
@@ -45,12 +47,12 @@ public class RegistController {
 //        return new ResponseEntity(registerService.setPassword(pass, username), HttpStatus.OK);
 //    }
     
-    @PutMapping("/{id}")
-    public ResponseMessage<RegisterInfluencerRequest> update(@RequestBody RegisterInfluencerRequest employee, @PathVariable Long id) {
-        return new ResponseMessage("Employee Updated!", registService.update(employee,id));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseMessage<RegisterInfluencerRequest> update(@RequestBody RegisterInfluencerRequest employee, @PathVariable Long id) {
+//        return new ResponseMessage("Employee Updated!", registService.update(employee,id));
+//    }
     
-    @PostMapping("/forgot")
+    @PutMapping("/influencer/forgot")
     public ResponseMessage<ForgotPasswordRequest> forgot(@RequestBody ForgotPasswordRequest email) {
         System.out.println("Lupa woyy");
         return new ResponseMessage("Password Updated!", registService.forgot(email));
@@ -59,5 +61,10 @@ public class RegistController {
     @GetMapping("/{id}")
     public ResponseData<RegisterInfluencerResponse> findById(@PathVariable Long id) {
         return new ResponseData(registService.getById(id));
+    }
+
+    @PutMapping("/influencer/change")
+    public String influencerChangePassword(@RequestBody InfluencerChangePasswordRequest request){
+        return registService.influencerChangePassword(request);
     }
 }

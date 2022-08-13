@@ -45,6 +45,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/login/**").permitAll()
                 .antMatchers("/api/register/**").permitAll()
+                .antMatchers("/api/influencer/findAllSortByRate").permitAll()
+                .antMatchers("/api/campaign/1").permitAll()
                 //                .antMatchers("/api/**").permitAll()
                 .antMatchers("/**", "/logout").authenticated()
                 .anyRequest().authenticated()

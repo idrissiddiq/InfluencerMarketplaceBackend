@@ -17,18 +17,18 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
     
-    @Query(value = "SELECT USER_ID FROM TB_USER WHERE USERNAME = ?1", nativeQuery = true)
+    @Query(value = "SELECT INFLUENCER_ID FROM TB_USER WHERE USERNAME = ?1", nativeQuery = true)
     Long findIdByUsername(String username);
     
-    @Query(value = "SELECT USER_ID FROM TB_USER WHERE USER_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT INFLUENCER_ID FROM TB_USER WHERE USER_ID = ?1", nativeQuery = true)
     Long findIdById(Long employee_id);
     
-    @Query(value = "SELECT * FROM TB_USER WHERE USER_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM TB_USER WHERE INFLUENCER_ID = ?1", nativeQuery = true)
     User findUsernameById(Long employee_id);
     
     @Query(value = "SELECT COUNT(*) FROM TB_USER WHERE USERNAME = ?1", nativeQuery = true)
     Long countByUsername(String username);
     
-    @Query(value = "SELECT USERNAME FROM TB_USER WHERE USER_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT USERNAME FROM TB_USER WHERE INFLUENCER_ID = ?1", nativeQuery = true)
     String findUserById(Long id);
 }

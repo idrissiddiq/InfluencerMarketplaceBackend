@@ -26,6 +26,9 @@ public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
 
     @Query(value = "SELECT * FROM TB_INFLUENCER WHERE JOB_ID != 'A'", nativeQuery = true)
     List<Influencer> findAllExceptAdmin();
+
+    @Query(value = "SELECT * FROM TB_INFLUENCER ORDER BY RATE DESC", nativeQuery = true)
+    List<Influencer> findAllSortByRate();
     
     @Query(value = "SELECT COUNT(*) FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
     Long findEmail(String email);
@@ -86,7 +89,7 @@ public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
     @Query(value = "SELECT PASSWORD FROM TB_USER WHERE USERNAME =? 1", nativeQuery = true)
     String getPassword(String username);
 
-    @Query(value = "SELECT TB_INFLUENCER FROM TB_EMPLOYEE WHERE EMAIL = ?1", nativeQuery = true)
+    @Query(value = "SELECT INFLUENCER_ID FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
     Long findIdByEmail (String email);
     
     @Query(value = "SELECT EMAIL FROM TB_INFLUENCER WHERE USER_ID = ?1", nativeQuery = true)

@@ -49,7 +49,10 @@ public class InfluencerService extends ResponseStatus {
     public List<Influencer> findAllExcept() {
         return influencerRepository.findAllExceptAdmin();
     }
-    
+
+    public List<Influencer> findAllSortByRate() {
+        return influencerRepository.findAllSortByRate();
+    }
 //    public String findEmail(ForgotPasswordRequest request){
 //        String email = request.getEmail();
 //        String check = employeeRepository.findEmail(email);

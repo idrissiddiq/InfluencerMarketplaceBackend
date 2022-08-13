@@ -2,24 +2,16 @@ package com.InfluencerMarketpalce.serverside.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_influencer")
 public class Influencer {
 
     @Id
-    @Column(name = "inflencer_id")
+    @Column(name = "influencer_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -28,6 +20,18 @@ public class Influencer {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "rate")
+    private String rate;
+
+    @Column(name = "engagement_rate")
+    private String er;
 
     @ManyToOne
     @JoinColumn(name = "job_id")
@@ -38,23 +42,51 @@ public class Influencer {
     @PrimaryKeyJoinColumn
     private User user;
 
+    @OneToOne(mappedBy = "influencer", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @PrimaryKeyJoinColumn
+    private Instagram instagram;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "influencer_type",
+            joinColumns = @JoinColumn(name = "inflencer_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<InfluenceType> influenceTypes;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "influencer_campaign",
+            joinColumns = @JoinColumn(name = "inflencer_id"),
+            inverseJoinColumns = @JoinColumn(name = "campaign_id"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Campaign> campaigns;
+
+    @OneToMany(mappedBy = "influencer", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Contract> contracts;
+
 
     public Influencer() {
     }
 
-    public Influencer(Long id, String fullname) {
-        this.id = id;
-        this.fullname = fullname;
-    }
-
-    public Influencer(Long id, String fullname, String email, Job job, User user) {
+    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, String rate, String er, Job job, User user, Instagram instagram, Set<InfluenceType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
+        this.birthDate = birthDate;
+        this.city = city;
+        this.rate = rate;
+        this.er = er;
         this.job = job;
         this.user = user;
+        this.instagram = instagram;
+        this.influenceTypes = influenceTypes;
+        this.campaigns = campaigns;
+        this.contracts = contracts;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -79,7 +111,37 @@ public class Influencer {
         this.email = email;
     }
 
-   
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getEr() {
+        return er;
+    }
+
+    public void setEr(String er) {
+        this.er = er;
+    }
 
     public Job getJob() {
         return job;
@@ -97,5 +159,36 @@ public class Influencer {
         this.user = user;
     }
 
+    public Instagram getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(Instagram instagram) {
+        this.instagram = instagram;
+    }
+
+    public Set<InfluenceType> getInfluenceTypes() {
+        return influenceTypes;
+    }
+
+    public void setInfluenceTypes(Set<InfluenceType> influenceTypes) {
+        this.influenceTypes = influenceTypes;
+    }
+
+    public Set<Campaign> getCampaigns() {
+        return campaigns;
+    }
+
+    public void setCampaigns(Set<Campaign> campaigns) {
+        this.campaigns = campaigns;
+    }
+
+    public Set<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        this.contracts = contracts;
+    }
 }
 //done
