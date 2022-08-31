@@ -3,6 +3,8 @@ package com.InfluencerMarketpalce.serverside.service;
 import com.InfluencerMarketpalce.serverside.model.*;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
+import com.InfluencerMarketpalce.serverside.model.response.EmployeeRequest;
+import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 import com.InfluencerMarketpalce.serverside.repository.BrandRepository;
 import com.InfluencerMarketpalce.serverside.repository.CampaignRepository;
 import com.InfluencerMarketpalce.serverside.repository.CampaignStatusRepository;
@@ -56,7 +58,7 @@ public class CampaignService extends ResponseStatus {
         return campaignRepository.findAllByBrandStatus(userBrand.getId(), id);
     }
 
-    public String createCampaign(CreateCampaignRequest request){
+    public ResponseMessage<CreateCampaignRequest> createCampaign(CreateCampaignRequest request){
         Campaign campaign = new Campaign();
         campaign.setTitle(request.getTitle());
         campaign.setDescription(request.getDescription());
@@ -68,7 +70,7 @@ public class CampaignService extends ResponseStatus {
         CampaignStatus campaignStatus = campaignStatusRepository.getById(1L);
         campaign.setCampaignStatus(campaignStatus);
         campaignRepository.save(campaign);
-        return "Create Campaign Success";
+        return new ResponseMessage<>("Campaign Created",new CreateCampaignRequest(request.getTitle(), request.getDescription()));
     }
 
     public String updateCampaign(UpdateCampaignRequest request, Authentication authentication,Long id){

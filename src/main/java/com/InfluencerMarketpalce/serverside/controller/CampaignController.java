@@ -4,8 +4,10 @@ import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
+import com.InfluencerMarketpalce.serverside.model.response.EmployeeRequest;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseListData;
+import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 import com.InfluencerMarketpalce.serverside.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -49,7 +51,7 @@ public class CampaignController {
     }
 
     @PostMapping("/create")
-    public String createCampaign(@RequestBody CreateCampaignRequest request) {
+    public ResponseMessage<CreateCampaignRequest> createCampaign(@RequestBody CreateCampaignRequest request) {
         return campaignService.createCampaign(request);
     }
 
