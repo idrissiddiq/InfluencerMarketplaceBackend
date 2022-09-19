@@ -4,7 +4,6 @@ import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
-import com.InfluencerMarketpalce.serverside.model.response.EmployeeRequest;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseListData;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
@@ -46,8 +45,8 @@ public class CampaignController {
     }
 
     @GetMapping("/me/{id}")
-    public ResponseListData<Campaign> findAllByBrandStatus(Authentication authentication, @PathVariable Long id) {
-        return new ResponseListData(campaignService.findAllByBrandStatus(authentication, id));
+    public ResponseListData<Campaign> findAllByBrandStatus(@PathVariable Long id) {
+        return new ResponseListData(campaignService.findAllByBrandStatus(id));
     }
 
     @PostMapping("/create")
@@ -56,7 +55,7 @@ public class CampaignController {
     }
 
     @PutMapping("/me/{id}")
-    public String updateCampaign(@RequestBody UpdateCampaignRequest request, Authentication authentication, @PathVariable Long id){
-        return campaignService.updateCampaign(request, authentication, id);
+    public ResponseMessage updateCampaign(@RequestBody UpdateCampaignRequest request, @PathVariable Long id){
+        return campaignService.updateCampaign(request, id);
     }
 }

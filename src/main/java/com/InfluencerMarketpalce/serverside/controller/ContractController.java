@@ -30,6 +30,11 @@ public class ContractController {
         return new ResponseListData(contractService.findAllMyContractFromCampaign(id));
     }
 
+    @GetMapping("/me")
+    public ResponseListData<Contract> findAllMyContractFromInfluencer() {
+        return new ResponseListData(contractService.findAllMyContractFromInfluencer());
+    }
+
     @PostMapping("/{id}")
     public String createContract(@RequestBody CreateContractRequest request, @PathVariable Long id) {
         return contractService.createContract(request, id);

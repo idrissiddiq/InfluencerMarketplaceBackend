@@ -5,8 +5,10 @@
  */
 package com.InfluencerMarketpalce.serverside.controller;
 
-import com.InfluencerMarketpalce.serverside.model.request.ApproveContractRequest;
+import com.InfluencerMarketpalce.serverside.model.request.ForgotPasswordRequest;
 import com.InfluencerMarketpalce.serverside.model.request.InfluencerChangePasswordRequest;
+import com.InfluencerMarketpalce.serverside.model.request.RegisterBrandRequest;
+import com.InfluencerMarketpalce.serverside.model.request.RegisterInfluencerRequest;
 import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.service.RegistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,26 +43,17 @@ public class RegistController {
     public ResponseMessage<RegisterBrandRequest> registerBrand(@RequestBody RegisterBrandRequest userBrand) {
         return registService.registBrand(userBrand);
     }
-
-//    @PutMapping("setPassword/{username}")
-//    public ResponseEntity<User> setPassword(@PathVariable String username, @RequestBody String pass) {
-//        return new ResponseEntity(registerService.setPassword(pass, username), HttpStatus.OK);
-//    }
-    
-//    @PutMapping("/{id}")
-//    public ResponseMessage<RegisterInfluencerRequest> update(@RequestBody RegisterInfluencerRequest employee, @PathVariable Long id) {
-//        return new ResponseMessage("Employee Updated!", registService.update(employee,id));
-//    }
     
     @PutMapping("/influencer/forgot")
     public ResponseMessage<ForgotPasswordRequest> forgot(@RequestBody ForgotPasswordRequest email) {
         System.out.println("Lupa woyy");
         return new ResponseMessage("Password Updated!", registService.forgot(email));
     }
-    
-    @GetMapping("/{id}")
-    public ResponseData<RegisterInfluencerResponse> findById(@PathVariable Long id) {
-        return new ResponseData(registService.getById(id));
+
+    @PutMapping("/brand/forgot")
+    public ResponseMessage<ForgotPasswordRequest> forgotBrand(@RequestBody ForgotPasswordRequest email) {
+        System.out.println("Lupa woyy");
+        return new ResponseMessage("Password Updated!", registService.forgotBrand(email));
     }
 
     @PutMapping("/influencer/change")

@@ -3,7 +3,6 @@ package com.InfluencerMarketpalce.serverside.service;
 import com.InfluencerMarketpalce.serverside.model.*;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
-import com.InfluencerMarketpalce.serverside.model.response.EmployeeRequest;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 import com.InfluencerMarketpalce.serverside.repository.BrandRepository;
 import com.InfluencerMarketpalce.serverside.repository.CampaignRepository;
@@ -52,7 +51,8 @@ public class CampaignService extends ResponseStatus {
         return campaignRepository.findAllByStatus(id);
     }
 
-    public List<Campaign> findAllByBrandStatus(Authentication authentication, Long id) {
+    public List<Campaign> findAllByBrandStatus(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
         String name = authentication.getName();
         UserBrand userBrand = userBrandRepository.findByUsername(name);
         return campaignRepository.findAllByBrandStatus(userBrand.getId(), id);
@@ -73,23 +73,28 @@ public class CampaignService extends ResponseStatus {
         return new ResponseMessage<>("Campaign Created",new CreateCampaignRequest(request.getTitle(), request.getDescription()));
     }
 
-    public String updateCampaign(UpdateCampaignRequest request, Authentication authentication,Long id){
+    public ResponseMessage updateCampaign(UpdateCampaignRequest request, Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
         String name = authentication.getName();
         UserBrand userBrand = userBrandRepository.findByUsername(name);
         Optional<Campaign> temp = campaignRepository.findAllByBrandId(userBrand.getId(), id);
         if (!temp.isPresent()) {
             throw dataNotFound();
         }
+        Campaign data = campaignRepository.findById(id).orElseThrow(this::dataNotFound);
+        if(userBrand.getId() != data.getBrand().getId()){
+            throw dataNotFound();
+        }
         Campaign campaign = new Campaign();
         campaign.setId(id);
         campaign.setTitle(request.getTitle());
         campaign.setDescription((request.getDescription()));
-        Brand brand = brandRepository.getById(userBrand.getId());
+        Brand brand = brandRepository.getById(data.getBrand().getId());
         campaign.setBrand(brand);
         CampaignStatus campaignStatus = campaignStatusRepository.getById(request.getcampaignStatus());
         campaign.setCampaignStatus(campaignStatus);
         campaignRepository.save(campaign);
-        return "Update Campaign Success";
+        return new ResponseMessage<>("Campaign Updated",new UpdateCampaignRequest(request.getTitle(), request.getDescription(), request.getcampaignStatus()));
     }
 
     public Campaign delete(Authentication authentication, Long id) {

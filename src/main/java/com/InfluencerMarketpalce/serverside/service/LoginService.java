@@ -7,7 +7,7 @@ package com.InfluencerMarketpalce.serverside.service;
 
 import com.InfluencerMarketpalce.serverside.model.User;
 import com.InfluencerMarketpalce.serverside.model.UserBrand;
-import com.InfluencerMarketpalce.serverside.model.response.LoginRequestDto;
+import com.InfluencerMarketpalce.serverside.model.request.LoginRequestDto;
 import com.InfluencerMarketpalce.serverside.model.response.LoginResponseDto;
 import com.InfluencerMarketpalce.serverside.repository.UserBrandRepository;
 import com.InfluencerMarketpalce.serverside.repository.UserRepository;

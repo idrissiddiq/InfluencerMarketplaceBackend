@@ -5,10 +5,12 @@
  */
 package com.InfluencerMarketpalce.serverside.repository;
 
+import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
 import com.InfluencerMarketpalce.serverside.model.response.ProfileDTO;
 
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,6 +34,9 @@ public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
     
     @Query(value = "SELECT COUNT(*) FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
     Long findEmail(String email);
+
+    @Query(value = "SELECT * FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
+    Optional<Influencer> findAllByEmail(String email);
 
     @Query(value = "SELECT TB_INFLUENCER.EMPLOYEE_ID, EMAIL, FULLNAME, JOB_ID FROM TB_INFLUENCER JOIN employee_class \n"
             + "on employee_class.employee_id = tb_employee.employee_id\n"

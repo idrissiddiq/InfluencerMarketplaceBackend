@@ -46,6 +46,13 @@ public class ContractService extends ResponseStatus  {
         return contractRepository.findAllByBrandCampaign(userBrand.getId(), id);
     }
 
+    public List<Contract> findAllMyContractFromInfluencer(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = userRepository.findByUsername(name);
+        return contractRepository.findAllByInfluencer(user.getId());
+    }
+
     public List<Contract> findAllMyContractFromCampaignAndStatus(long campaignId, long statusId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();

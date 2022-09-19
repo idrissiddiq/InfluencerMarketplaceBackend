@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.InfluencerMarketpalce.serverside.model.response;
+package com.InfluencerMarketpalce.serverside.model.request;
 
 import java.time.LocalDate;
 
@@ -17,19 +17,16 @@ public class RegisterInfluencerRequest {
     private String fullname;
 
     private String email;
-
-    private String jobId;
     private String city;
     private LocalDate birthDate;
     private String influenceType;
     private String username;
 
 
-    public RegisterInfluencerRequest(Long id, String fullname, String email, String jobId, String city, LocalDate birthDate, String influenceType, String username) {
+    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String influenceType, String username) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
-        this.jobId = jobId;
         this.city = city;
         this.birthDate = birthDate;
         this.influenceType = influenceType;
@@ -58,14 +55,6 @@ public class RegisterInfluencerRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
     }
 
     public String getCity() {

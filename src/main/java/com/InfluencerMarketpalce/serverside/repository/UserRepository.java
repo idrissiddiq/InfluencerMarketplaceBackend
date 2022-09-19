@@ -5,10 +5,14 @@
  */
 package com.InfluencerMarketpalce.serverside.repository;
 
+import com.InfluencerMarketpalce.serverside.model.Influencer;
 import com.InfluencerMarketpalce.serverside.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
 /**
  *
  * @author Idris Siddiq
@@ -31,4 +35,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     @Query(value = "SELECT USERNAME FROM TB_USER WHERE INFLUENCER_ID = ?1", nativeQuery = true)
     String findUserById(Long id);
+
+    @Query(value = "SELECT * FROM TB_USER WHERE USERNAME = ?1", nativeQuery = true)
+    Optional<User> findAllByUsername(String username);
 }
