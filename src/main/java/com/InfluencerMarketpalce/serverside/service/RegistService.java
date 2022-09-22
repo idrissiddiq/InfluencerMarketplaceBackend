@@ -14,7 +14,6 @@ import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
 
-import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +37,11 @@ public class RegistService extends ResponseStatus {
     private RoleRepository roleRepository;
     private EmailService emailService;
     private InfluenceTypeRepository influenceTypeRepository;
+    private InfluencerFilePathRepository influencerFilePathRepository;
     
     
     @Autowired
-    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository) {
+    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository) {
         this.influencerRepository = influencerRepository;
         this.brandRepository = brandRepository;
         this.userRepository = userRepository;
@@ -51,6 +51,7 @@ public class RegistService extends ResponseStatus {
         this.roleRepository = roleRepository;
         this.emailService = emailService;
         this.influenceTypeRepository = influenceTypeRepository;
+        this.influencerFilePathRepository = influencerFilePathRepository;
     }
     
     public User setPassword(String pass, String username){
@@ -111,7 +112,7 @@ public class RegistService extends ResponseStatus {
         influencer.setEmail(request.getEmail());
         influencer.setBirthDate(request.getBirthDate());
         influencer.setCity(request.getCity());
-        Set<InfluenceType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
+        Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
         influencer.setInfluenceTypes(temp_type);
         influencer.setJob(job);
 
@@ -129,9 +130,14 @@ public class RegistService extends ResponseStatus {
         Set<Role> temp_role = roleRepository.findByName("Influencer");
         user.setRoles(temp_role);
         influencer.setUser(user);
+        InfluencerFilePath influencerFilePath = new InfluencerFilePath();
+        influencerFilePath.setId(request.getId());
+        influencerFilePath.setProfile("/images/profile/blankProfile.png");
+        influencerFilePath.setInfluencer(influencer);
         emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
         influencerRepository.save(influencer);
         userRepository.save(user);
+        influencerFilePathRepository.save(influencerFilePath);
         return new ResponseMessage<>("Influencer Registered", new RegisterInfluencerResponse(request.getId(), request.getFullname(), request.getEmail(), job, request.getUsername(), generatedString));
     }
     

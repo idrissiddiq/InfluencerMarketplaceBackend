@@ -6,6 +6,8 @@
 package com.InfluencerMarketpalce.serverside.controller;
 
 import com.InfluencerMarketpalce.serverside.model.Influencer;
+import com.InfluencerMarketpalce.serverside.model.InfluencerType;
+import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
 import com.InfluencerMarketpalce.serverside.service.InfluencerService;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
@@ -43,9 +45,24 @@ public class InfluencerController {
         return new ResponseData(influencerService.profile());
     }
 
+    @GetMapping("/mytype")
+    public ResponseListData<InfluencerType> myType() {
+        return new ResponseListData(influencerService.findMyType());
+    }
+
     @PutMapping("/profile")
     public ResponseMessage editProfile(@RequestBody EditProfileInfluencer request){
         return influencerService.editProfile(request);
+    }
+
+    @PutMapping("/profile/photo")
+    public ResponseMessage editProfilePhoto(@RequestBody ChangeProfilePhotoRequest request){
+        return influencerService.editProfilePoto(request);
+    }
+
+    @GetMapping("/profile/photo")
+    public ResponseMessage getMyProfilePhotoPath(){
+        return influencerService.getMyProfilePhotoPath();
     }
 
     @GetMapping("/except")

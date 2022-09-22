@@ -2,7 +2,6 @@ com\InfluencerMarketpalce\serverside\repository\CampaignRepository.class
 com\InfluencerMarketpalce\serverside\model\Influencer.class
 com\InfluencerMarketpalce\serverside\model\Privilege.class
 com\InfluencerMarketpalce\serverside\model\response\RegisterInfluencerResponse.class
-com\InfluencerMarketpalce\serverside\model\InfluenceType.class
 com\InfluencerMarketpalce\serverside\repository\JobRepository.class
 com\InfluencerMarketpalce\serverside\service\BrandService.class
 com\InfluencerMarketpalce\serverside\service\response\ResponseStatus.class
@@ -48,12 +47,15 @@ com\InfluencerMarketpalce\serverside\model\Job.class
 com\InfluencerMarketpalce\serverside\model\Contract.class
 com\InfluencerMarketpalce\serverside\model\request\CreateCampaignRequest.class
 com\InfluencerMarketpalce\serverside\model\UserBrand$UserBrandBuilder.class
+com\InfluencerMarketpalce\serverside\property\FileStorageProperties.class
 com\InfluencerMarketpalce\serverside\model\AppUserBrandDetail.class
 com\InfluencerMarketpalce\serverside\model\User$UserBuilder.class
+com\InfluencerMarketpalce\serverside\model\InfluencerFilePath.class
 com\InfluencerMarketpalce\serverside\model\request\UpdateCampaignRequest.class
 com\InfluencerMarketpalce\serverside\repository\InfluenceTypeRepository.class
 com\InfluencerMarketpalce\serverside\service\InfluencerService.class
 com\InfluencerMarketpalce\serverside\model\ContractStatus.class
+com\InfluencerMarketpalce\serverside\model\InfluencerType.class
 com\InfluencerMarketpalce\serverside\model\request\InfluencerChangePasswordRequest.class
 com\InfluencerMarketpalce\serverside\model\MyUserDetail.class
 com\InfluencerMarketpalce\serverside\model\request\ForgotPasswordRequest.class
@@ -63,7 +65,9 @@ com\InfluencerMarketpalce\serverside\repository\ContractStatusRepository.class
 com\InfluencerMarketpalce\serverside\repository\ContractRepository.class
 com\InfluencerMarketpalce\serverside\model\CampaignStatus.class
 com\InfluencerMarketpalce\serverside\service\RegistService.class
+com\InfluencerMarketpalce\serverside\model\request\ChangeProfilePhotoRequest.class
 com\InfluencerMarketpalce\serverside\model\response\ProfileDTO.class
+com\InfluencerMarketpalce\serverside\repository\InfluencerFilePathRepository.class
 com\InfluencerMarketpalce\serverside\controller\CampaignController.class
 com\InfluencerMarketpalce\serverside\model\response\ResponseData.class
 com\InfluencerMarketpalce\serverside\model\AppUserDetail.class

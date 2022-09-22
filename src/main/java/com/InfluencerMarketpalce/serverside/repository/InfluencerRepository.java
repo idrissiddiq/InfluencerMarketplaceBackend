@@ -7,6 +7,7 @@ package com.InfluencerMarketpalce.serverside.repository;
 
 import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
+import com.InfluencerMarketpalce.serverside.model.InfluencerType;
 import com.InfluencerMarketpalce.serverside.model.response.ProfileDTO;
 
 import java.util.List;

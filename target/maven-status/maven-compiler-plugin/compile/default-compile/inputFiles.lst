@@ -1,3 +1,4 @@
+C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\InfluencerFilePathRepository.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\config\ApplicationSecurity.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\EmailService.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\RoleRepository.java
@@ -10,6 +11,7 @@ C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalc
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\BrandRepository.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\Brand.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\AppUserBrandDetailService.java
+C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\request\ChangeProfilePhotoRequest.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\User.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\ServersideApplication.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\CampaignStatus.java
@@ -49,7 +51,6 @@ C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalc
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\request\UpdateCampaignRequest.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\controller\InfluencerController.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\AppUserDetail.java
-C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\InfluenceType.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\property\FileStorageProperties.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\response\ResponseMessage.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\AppUserBrandDetail.java
@@ -75,7 +76,9 @@ C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalc
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\request\ApproveContractRequest.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\exception\MyFileNotFoundException.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\Campaign.java
+C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\InfluencerType.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\ContractStatus.java
+C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\InfluencerFilePath.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\LoginService.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\controller\BrandController.java
 C:\Gawe\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\response\ProfileDTO.java

@@ -6,14 +6,13 @@
 package com.InfluencerMarketpalce.serverside.service;
 
 import com.InfluencerMarketpalce.serverside.model.*;
+import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
-import com.InfluencerMarketpalce.serverside.repository.InfluenceTypeRepository;
+import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
-import com.InfluencerMarketpalce.serverside.repository.InfluencerRepository;
-import com.InfluencerMarketpalce.serverside.repository.JobRepository;
-import com.InfluencerMarketpalce.serverside.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -36,14 +35,16 @@ public class InfluencerService extends ResponseStatus {
     private InfluenceTypeRepository influenceTypeRepository;
     private UserRepository userRepository;
     private PasswordEncoder encoder;
+    private InfluencerFilePathRepository influencerFilePathRepository;
 
     @Autowired
-    public InfluencerService(InfluencerRepository influencerRepository, JobRepository jobRepository, InfluenceTypeRepository influenceTypeRepository, UserRepository userRepository, PasswordEncoder encoder) {
+    public InfluencerService(InfluencerRepository influencerRepository, JobRepository jobRepository, InfluenceTypeRepository influenceTypeRepository, UserRepository userRepository, PasswordEncoder encoder, InfluencerFilePathRepository influencerFilePathRepository) {
         this.influencerRepository = influencerRepository;
         this.jobRepository = jobRepository;
         this.influenceTypeRepository = influenceTypeRepository;
         this.userRepository = userRepository;
         this.encoder = encoder;
+        this.influencerFilePathRepository = influencerFilePathRepository;
     }
 
     public Influencer profile() {
@@ -51,6 +52,18 @@ public class InfluencerService extends ResponseStatus {
         String name = authentication.getName();
         User user = userRepository.findByUsername(name);
         Influencer data = influencerRepository.findById(user.getId()).orElseThrow(this::dataNotFound);
+        return data;
+    }
+
+    public List<InfluencerType> findMyType() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User user = userRepository.findByUsername(name);
+        List<Long> temp = influenceTypeRepository.findMyTypeId(user.getId());
+        List<InfluencerType> data = new ArrayList<>();
+        for(int i = 0; i < temp.size() ; i++){
+            data.add(influenceTypeRepository.getMyTypeName(temp.get(i)));
+        }
         return data;
     }
 
@@ -72,15 +85,39 @@ public class InfluencerService extends ResponseStatus {
         influencer.setBirthDate(request.getBirthDate());
         influencer.setCity(request.getCity());
         influencer.setEmail(request.getEmail());
-        Set<InfluenceType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
+        Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
         influencer.setInfluenceTypes(temp_type);
         influencer.setCampaigns(user.getInfluencer().getCampaigns());
         Job job = jobRepository.findByIdJob("I");
         influencer.setJob(job);
-//        influencer.setContracts(user.getInfluencer().getContracts());
-//        influencer.setUser(user);
         influencerRepository.save(influencer);
         return new ResponseMessage<>("Influencer Profile Updated",new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType(), request.getUsername()));
+    }
+
+    public ResponseMessage editProfilePoto(ChangeProfilePhotoRequest request){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
+        String name = authentication.getName();
+        User user = userRepository.findByUsername(name);
+        Influencer temp = influencerRepository.getById(user.getId());
+//        if (temp.equals(null)) {
+//            return new ResponseMessage<>("Error -  Account Not Found", new ChangeProfilePhotoRequest(request.getPath()));
+//        }
+        InfluencerFilePath influencerFilePath = new InfluencerFilePath();
+        influencerFilePath.setId(user.getId());
+        influencerFilePath.setProfile(request.getPath());
+        influencerFilePathRepository.save(influencerFilePath);
+        return new ResponseMessage<>("Profile Photo Updated",new ChangeProfilePhotoRequest(request.getPath()));
+    }
+
+    public ResponseMessage<ChangeProfilePhotoRequest> getMyProfilePhotoPath(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
+        String name = authentication.getName();
+        User user = userRepository.findByUsername(name);
+        InfluencerFilePath influencerFilePath = influencerFilePathRepository.getMyProfilePhotoPath(user.getId());
+//        if (influencerFilePath.equals(null)) {
+//            return new ResponseMessage<>("Error -  Account Not Found", new ChangeProfilePhotoRequest(request.getPath()));
+//        }
+        return new ResponseMessage<>("Profile Photo Updated",new ChangeProfilePhotoRequest(influencerFilePath.getProfile()));
     }
 
     public List<Influencer> findAll() {

@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_influence_type")
-public class InfluenceType {
+public class InfluencerType {
     @Id
     @Column(name = "type_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,11 +17,11 @@ public class InfluenceType {
     @ManyToMany(mappedBy = "influenceTypes", cascade = CascadeType.ALL)
     private Set<Influencer> influencers;
 
-    public InfluenceType(){
+    public InfluencerType(){
 
     }
 
-    public InfluenceType(Long id, String name, Set<Influencer> influencers) {
+    public InfluencerType(Long id, String name, Set<Influencer> influencers) {
         this.id = id;
         this.name = name;
         this.influencers = influencers;

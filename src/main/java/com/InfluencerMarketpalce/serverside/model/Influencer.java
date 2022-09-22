@@ -45,15 +45,20 @@ public class Influencer {
     @OneToOne(mappedBy = "influencer", cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @PrimaryKeyJoinColumn
+    private InfluencerFilePath influencerFilePath;
+
+    @OneToOne(mappedBy = "influencer", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @PrimaryKeyJoinColumn
     private Instagram instagram;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "influencer_type",
-            joinColumns = @JoinColumn(name = "inflencer_id"),
+            joinColumns = @JoinColumn(name = "influencer_id"),
             inverseJoinColumns = @JoinColumn(name = "type_id"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<InfluenceType> influenceTypes;
+    private Set<InfluencerType> influenceTypes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -71,7 +76,7 @@ public class Influencer {
     public Influencer() {
     }
 
-    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, String rate, String er, Job job, User user, Instagram instagram, Set<InfluenceType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
+    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, String rate, String er, Job job, User user, InfluencerFilePath influencerFilePath, Instagram instagram, Set<InfluencerType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -81,6 +86,7 @@ public class Influencer {
         this.er = er;
         this.job = job;
         this.user = user;
+        this.influencerFilePath = influencerFilePath;
         this.instagram = instagram;
         this.influenceTypes = influenceTypes;
         this.campaigns = campaigns;
@@ -167,11 +173,11 @@ public class Influencer {
         this.instagram = instagram;
     }
 
-    public Set<InfluenceType> getInfluenceTypes() {
+    public Set<InfluencerType> getInfluenceTypes() {
         return influenceTypes;
     }
 
-    public void setInfluenceTypes(Set<InfluenceType> influenceTypes) {
+    public void setInfluenceTypes(Set<InfluencerType> influenceTypes) {
         this.influenceTypes = influenceTypes;
     }
 
@@ -189,6 +195,14 @@ public class Influencer {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public InfluencerFilePath getInfluencerFilePath() {
+        return influencerFilePath;
+    }
+
+    public void setInfluencerFilePath(InfluencerFilePath influencerFilePath) {
+        this.influencerFilePath = influencerFilePath;
     }
 }
 //done
