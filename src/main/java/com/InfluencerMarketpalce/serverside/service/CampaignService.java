@@ -4,6 +4,7 @@ import com.InfluencerMarketpalce.serverside.model.*;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
+import com.InfluencerMarketpalce.serverside.model.response.FindAllOpenCampaignResponse;
 import com.InfluencerMarketpalce.serverside.repository.BrandRepository;
 import com.InfluencerMarketpalce.serverside.repository.CampaignRepository;
 import com.InfluencerMarketpalce.serverside.repository.CampaignStatusRepository;
@@ -49,6 +50,10 @@ public class CampaignService extends ResponseStatus {
 
     public List<Campaign> findAllByStatus(Long id) {
         return campaignRepository.findAllByStatus(id);
+    }
+
+    public List<FindAllOpenCampaignResponse> findAllOpenCampaign() {
+        return campaignRepository.findAllCampaignOpen();
     }
 
     public List<Campaign> findAllByBrandStatus(Long id) {

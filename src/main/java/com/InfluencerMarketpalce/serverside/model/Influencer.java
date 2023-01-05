@@ -28,17 +28,29 @@ public class Influencer {
     private String city;
 
     @Column(name = "rate")
-    private String rate;
+    private Long rate;
+
+    @Column(name = "campaign_done")
+    private Long cd;
 
     @Column(name = "engagement_rate")
     private String er;
+
+    @Column(name = "instagram")
+    private String instagram;
+
+    @Column(name = "youtube")
+    private String youtube;
+
+    @Column(name = "tiktok")
+    private String tiktok;
 
     @ManyToOne
     @JoinColumn(name = "job_id")
     private Job job;
 
     @OneToOne(mappedBy = "influencer", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @PrimaryKeyJoinColumn
     private User user;
 
@@ -47,10 +59,6 @@ public class Influencer {
     @PrimaryKeyJoinColumn
     private InfluencerFilePath influencerFilePath;
 
-    @OneToOne(mappedBy = "influencer", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @PrimaryKeyJoinColumn
-    private Instagram instagram;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -76,7 +84,7 @@ public class Influencer {
     public Influencer() {
     }
 
-    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, String rate, String er, Job job, User user, InfluencerFilePath influencerFilePath, Instagram instagram, Set<InfluencerType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
+    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, Long rate, String er, String instagram, String youtube, String tiktok, Job job, User user, InfluencerFilePath influencerFilePath, Set<InfluencerType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -84,10 +92,12 @@ public class Influencer {
         this.city = city;
         this.rate = rate;
         this.er = er;
+        this.instagram = instagram;
+        this.youtube = youtube;
+        this.tiktok = tiktok;
         this.job = job;
         this.user = user;
         this.influencerFilePath = influencerFilePath;
-        this.instagram = instagram;
         this.influenceTypes = influenceTypes;
         this.campaigns = campaigns;
         this.contracts = contracts;
@@ -133,12 +143,20 @@ public class Influencer {
         this.city = city;
     }
 
-    public String getRate() {
+    public Long getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(Long rate) {
         this.rate = rate;
+    }
+
+    public Long getCd() {
+        return cd;
+    }
+
+    public void setCd(Long cd) {
+        this.cd = cd;
     }
 
     public String getEr() {
@@ -163,14 +181,6 @@ public class Influencer {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Instagram getInstagram() {
-        return instagram;
-    }
-
-    public void setInstagram(Instagram instagram) {
-        this.instagram = instagram;
     }
 
     public Set<InfluencerType> getInfluenceTypes() {
@@ -203,6 +213,30 @@ public class Influencer {
 
     public void setInfluencerFilePath(InfluencerFilePath influencerFilePath) {
         this.influencerFilePath = influencerFilePath;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public String getTiktok() {
+        return tiktok;
+    }
+
+    public void setTiktok(String tiktok) {
+        this.tiktok = tiktok;
     }
 }
 //done

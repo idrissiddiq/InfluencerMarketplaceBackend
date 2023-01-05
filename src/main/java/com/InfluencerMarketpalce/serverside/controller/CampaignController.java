@@ -4,6 +4,7 @@ import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
+import com.InfluencerMarketpalce.serverside.model.response.FindAllOpenCampaignResponse;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseListData;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
@@ -42,6 +43,11 @@ public class CampaignController {
     @GetMapping("/{id}")
     public ResponseListData<Campaign> findAllByStatus(@PathVariable Long id) {
         return new ResponseListData(campaignService.findAllByStatus(id));
+    }
+
+    @GetMapping("/open")
+    public ResponseListData<FindAllOpenCampaignResponse> findAllOpenCampaign() {
+        return new ResponseListData(campaignService.findAllOpenCampaign());
     }
 
     @GetMapping("/me/{id}")

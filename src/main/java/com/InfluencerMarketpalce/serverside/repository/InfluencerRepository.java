@@ -5,9 +5,9 @@
  */
 package com.InfluencerMarketpalce.serverside.repository;
 
-import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
-import com.InfluencerMarketpalce.serverside.model.InfluencerType;
+import com.InfluencerMarketpalce.serverside.model.response.CalculateAgeReponse;
+import com.InfluencerMarketpalce.serverside.model.response.FindAllInfluencerResponse;
 import com.InfluencerMarketpalce.serverside.model.response.ProfileDTO;
 
 import java.util.List;
@@ -26,13 +26,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
 
-
     @Query(value = "SELECT * FROM TB_INFLUENCER WHERE JOB_ID != 'A'", nativeQuery = true)
     List<Influencer> findAllExceptAdmin();
 
+    @Query(value = "SELECT tb_influencer.fullname as \\\"fullname\\\", tb_influencer.city as \\\"city\\\", tb_influencer.engagement_rate as \\\"er\\\", tb_influencer.rate as \\\"rate\\\", (tb_influencer.rate / tb_influencer.campaign_done) as \\\"finalrate\\\", tb_user.username as \\\"username\\\", TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) as \\\"age\\\", tb_influencer.instagram as \\\"instagram\\\", tb_influencer.tiktok as \\\"tiktok\\\", tb_influencer.youtube as \\\"youtube\\\" FROM tb_influencer INNER JOIN tb_user ON tb_influencer.influencer_id=tb_user.influencer_id ORDER BY RATE DESC", nativeQuery = true)
+    List<FindAllInfluencerResponse> findAllInfluencer();
+
     @Query(value = "SELECT * FROM TB_INFLUENCER ORDER BY RATE DESC", nativeQuery = true)
     List<Influencer> findAllSortByRate();
-    
+
+    @Query(value = "SELECT TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) as \\\"age\\\" FROM TB_INFLUENCER ORDER BY RATE DESC", nativeQuery = true)
+    List<CalculateAgeReponse> findAgeSortByRate();
+
     @Query(value = "SELECT COUNT(*) FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
     Long findEmail(String email);
 

@@ -2,6 +2,7 @@ package com.InfluencerMarketpalce.serverside.controller;
 
 import com.InfluencerMarketpalce.serverside.model.Brand;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
+import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileBrand;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
@@ -30,5 +31,15 @@ public class BrandController {
     @PutMapping("/profile")
     public ResponseMessage editProfile(@RequestBody EditProfileBrand request){
         return brandService.editProfile(request);
+    }
+
+    @GetMapping("/profile/photo")
+    public ResponseMessage getMyProfilePhotoPath(){
+        return brandService.getMyProfilePhotoPath();
+    }
+
+    @PutMapping("/profile/photo")
+    public ResponseMessage editProfilePhoto(@RequestBody ChangeProfilePhotoRequest request){
+        return brandService.editProfilePoto(request);
     }
 }

@@ -1,5 +1,7 @@
 package com.InfluencerMarketpalce.serverside.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class InfluencerType {
     private String name;
 
     @ManyToMany(mappedBy = "influenceTypes", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Influencer> influencers;
 
     public InfluencerType(){

@@ -1,14 +1,13 @@
 package com.InfluencerMarketpalce.serverside.service;
 
 import com.InfluencerMarketpalce.serverside.model.*;
+import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileBrand;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
-import com.InfluencerMarketpalce.serverside.repository.BrandRepository;
-import com.InfluencerMarketpalce.serverside.repository.InfluencerRepository;
-import com.InfluencerMarketpalce.serverside.repository.JobRepository;
-import com.InfluencerMarketpalce.serverside.repository.UserBrandRepository;
+import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,12 +22,14 @@ public class BrandService extends ResponseStatus {
     private BrandRepository brandRepository;
     private UserBrandRepository userBrandRepository;
     private JobRepository jobRepository;
+    private BrandFilePathRepository brandFilePathRepository;
 
     @Autowired
-    public BrandService(BrandRepository brandRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository) {
+    public BrandService(BrandRepository brandRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, BrandFilePathRepository brandFilePathRepository) {
         this.brandRepository = brandRepository;
         this.userBrandRepository = userBrandRepository;
         this.jobRepository = jobRepository;
+        this.brandFilePathRepository = brandFilePathRepository;
     }
 
     public Brand profile() {
@@ -57,9 +58,33 @@ public class BrandService extends ResponseStatus {
         brand.setEmail(request.getEmail());
         Job job = jobRepository.findByIdJob("B");
         brand.setBrandjob(job);
-//        influencer.setContracts(user.getInfluencer().getContracts());
-//        influencer.setUser(user);
         brandRepository.save(brand);
         return new ResponseMessage<>("Influencer Profile Updated",new EditProfileBrand(request.getFullname(), request.getEmail(), request.getUsername()));
+    }
+
+    public ResponseMessage<ChangeProfilePhotoRequest> getMyProfilePhotoPath(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
+        String name = authentication.getName();
+        UserBrand userBrand = userBrandRepository.findByUsername(name);
+        BrandFilePath brandFilePath = brandFilePathRepository.getMyProfilePhotoPath(userBrand.getId());
+//        if (influencerFilePath.equals(null)) {
+//            return new ResponseMessage<>("Error -  Account Not Found", new ChangeProfilePhotoRequest(request.getPath()));
+//        }
+        return new ResponseMessage<>("Profile Photo Updated",new ChangeProfilePhotoRequest(brandFilePath.getProfile()));
+    }
+
+    public ResponseMessage editProfilePoto(ChangeProfilePhotoRequest request){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
+        String name = authentication.getName();
+        UserBrand userBrand = userBrandRepository.findByUsername(name);
+        Brand temp = brandRepository.getById(userBrand.getId());
+//        if (temp.equals(null)) {
+//            return new ResponseMessage<>("Error -  Account Not Found", new ChangeProfilePhotoRequest(request.getPath()));
+//        }
+        BrandFilePath brandFilePath = new BrandFilePath();
+        brandFilePath.setId(userBrand.getId());
+        brandFilePath.setProfile(request.getPath());
+        brandFilePathRepository.save(brandFilePath);
+        return new ResponseMessage<>("Profile Photo Updated",new ChangeProfilePhotoRequest(request.getPath()));
     }
 }

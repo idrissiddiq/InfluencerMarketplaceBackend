@@ -1,6 +1,7 @@
 package com.InfluencerMarketpalce.serverside.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -16,8 +17,27 @@ public class Campaign {
     @Column(name = "title")
     private String title;
 
+    @Length(max = 1500)
     @Column(name = "description")
     private String description;
+
+    @Column(name = "start_instagram")
+    private Long startIg;
+
+    @Column(name = "end_instagram")
+    private Long endIg;
+
+    @Column(name = "start_tiktok")
+    private Long startTiktok;
+
+    @Column(name = "end_tiktok")
+    private Long endTiktok;
+
+    @Column(name = "start_youtube")
+    private Long startYt;
+
+    @Column(name = "end_youtube")
+    private Long endYt;
 
     @ManyToOne
     @JoinColumn(name = "campaign_status_id")

@@ -38,10 +38,11 @@ public class RegistService extends ResponseStatus {
     private EmailService emailService;
     private InfluenceTypeRepository influenceTypeRepository;
     private InfluencerFilePathRepository influencerFilePathRepository;
+    private BrandFilePathRepository brandFilePathRepository;
     
     
     @Autowired
-    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository) {
+    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository) {
         this.influencerRepository = influencerRepository;
         this.brandRepository = brandRepository;
         this.userRepository = userRepository;
@@ -52,6 +53,7 @@ public class RegistService extends ResponseStatus {
         this.emailService = emailService;
         this.influenceTypeRepository = influenceTypeRepository;
         this.influencerFilePathRepository = influencerFilePathRepository;
+        this.brandFilePathRepository = brandFilePathRepository;
     }
     
     public User setPassword(String pass, String username){
@@ -90,9 +92,14 @@ public class RegistService extends ResponseStatus {
         Set<Role> temp_role = roleRepository.findByName("Brand");
         userBrand.setRoles(temp_role);
         brand.setUserBrand(userBrand);
+        BrandFilePath brandFilePath = new BrandFilePath();
+        brandFilePath.setId(request.getId());
+        brandFilePath.setProfile("/images/brandProfile/blankProfile.png");
+        brandFilePath.setBrand(brand);
         emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
         brandRepository.save(brand);
         userBrandRepository.save(userBrand);
+        brandFilePathRepository.save(brandFilePath);
         return new ResponseMessage<>("Brand Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
     }
     

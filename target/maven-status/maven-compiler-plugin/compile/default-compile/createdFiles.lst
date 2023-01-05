@@ -1,3 +1,4 @@
+com\InfluencerMarketpalce\serverside\model\response\FindAllInfluencerResponse.class
 com\InfluencerMarketpalce\serverside\repository\CampaignRepository.class
 com\InfluencerMarketpalce\serverside\model\Influencer.class
 com\InfluencerMarketpalce\serverside\model\Privilege.class
@@ -6,6 +7,7 @@ com\InfluencerMarketpalce\serverside\repository\JobRepository.class
 com\InfluencerMarketpalce\serverside\service\BrandService.class
 com\InfluencerMarketpalce\serverside\service\response\ResponseStatus.class
 com\InfluencerMarketpalce\serverside\model\request\EditProfileBrand.class
+com\InfluencerMarketpalce\serverside\repository\BrandFilePathRepository.class
 com\InfluencerMarketpalce\serverside\service\EmailService.class
 com\InfluencerMarketpalce\serverside\config\PasswordEncoderConfig.class
 com\InfluencerMarketpalce\serverside\model\Campaign.class
@@ -26,7 +28,10 @@ com\InfluencerMarketpalce\serverside\model\request\RegisterInfluencerRequest.cla
 com\InfluencerMarketpalce\serverside\service\JobService.class
 com\InfluencerMarketpalce\serverside\controller\LoginController.class
 com\InfluencerMarketpalce\serverside\utility\FileUploadUtil.class
+com\InfluencerMarketpalce\serverside\model\BrandFilePath.class
 com\InfluencerMarketpalce\serverside\model\User.class
+com\InfluencerMarketpalce\serverside\model\response\GetProfilePhotoByIdResponse.class
+com\InfluencerMarketpalce\serverside\model\response\CalculateAgeReponse.class
 com\InfluencerMarketpalce\serverside\service\AppUserBrandDetailService.class
 com\InfluencerMarketpalce\serverside\model\response\RegisterBrandResponse.class
 com\InfluencerMarketpalce\serverside\service\LoginService.class
@@ -41,7 +46,6 @@ com\InfluencerMarketpalce\serverside\model\request\ApproveContractRequest.class
 com\InfluencerMarketpalce\serverside\model\response\ResponseListData.class
 com\InfluencerMarketpalce\serverside\model\MyUserBrandDetail.class
 com\InfluencerMarketpalce\serverside\model\request\CreateContractRequest.class
-com\InfluencerMarketpalce\serverside\model\Instagram.class
 com\InfluencerMarketpalce\serverside\model\Job$JobBuilder.class
 com\InfluencerMarketpalce\serverside\model\Job.class
 com\InfluencerMarketpalce\serverside\model\Contract.class
@@ -76,6 +80,7 @@ com\InfluencerMarketpalce\serverside\service\CampaignService.class
 com\InfluencerMarketpalce\serverside\controller\FileUploadController.class
 com\InfluencerMarketpalce\serverside\model\UserBrand.class
 com\InfluencerMarketpalce\serverside\repository\UserRepository.class
+com\InfluencerMarketpalce\serverside\model\response\FindAllOpenCampaignResponse.class
 com\InfluencerMarketpalce\serverside\controller\JobController.class
 com\InfluencerMarketpalce\serverside\repository\UserBrandRepository.class
 com\InfluencerMarketpalce\serverside\model\Brand.class

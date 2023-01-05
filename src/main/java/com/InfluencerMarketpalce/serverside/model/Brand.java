@@ -19,6 +19,9 @@ public class Brand {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "company")
+    private String company;
+
     @ManyToOne
     @JoinColumn(name = "job_id")
     private Job Brandjob;

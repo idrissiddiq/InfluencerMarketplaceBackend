@@ -4,24 +4,21 @@ import java.time.LocalDate;
 
 public class EditProfileInfluencer {
     private String fullname;
-
     private String email;
     private String city;
     private LocalDate birthDate;
     private String influenceType;
-    private String username;
 
     public EditProfileInfluencer(){
 
     }
 
-    public EditProfileInfluencer(String fullname, String email, String city, LocalDate birthDate, String influenceType, String username) {
+    public EditProfileInfluencer(String fullname, String email, String city, LocalDate birthDate, String influenceType) {
         this.fullname = fullname;
         this.email = email;
         this.city = city;
         this.birthDate = birthDate;
         this.influenceType = influenceType;
-        this.username = username;
     }
 
     public String getFullname() {
@@ -62,13 +59,5 @@ public class EditProfileInfluencer {
 
     public void setInfluenceType(String influenceType) {
         this.influenceType = influenceType;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

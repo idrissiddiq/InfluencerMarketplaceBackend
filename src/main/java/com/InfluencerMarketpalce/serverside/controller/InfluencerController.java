@@ -6,19 +6,14 @@
 package com.InfluencerMarketpalce.serverside.controller;
 
 import com.InfluencerMarketpalce.serverside.model.Influencer;
+import com.InfluencerMarketpalce.serverside.model.InfluencerFilePath;
 import com.InfluencerMarketpalce.serverside.model.InfluencerType;
 import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
+import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.service.InfluencerService;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseListData;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -65,6 +60,11 @@ public class InfluencerController {
         return influencerService.getMyProfilePhotoPath();
     }
 
+    @GetMapping("/profile/photo/{id}")
+    public InfluencerFilePath getProfilePhotoById(@PathVariable Long id) {
+        return influencerService.getProfilePhotoById(id);
+    }
+
     @GetMapping("/except")
 //    @PreAuthorize("hasAnyAuthority('READ_ADMIN')")
     public ResponseListData<Influencer> findAllExcept() {
@@ -74,6 +74,16 @@ public class InfluencerController {
     @GetMapping("/findAllSortByRate")
     public ResponseListData<Influencer> findAllSortByRate() {
         return new ResponseListData(influencerService.findAllSortByRate());
+    }
+
+    @GetMapping("/findAgeSortByRate")
+    public ResponseListData<CalculateAgeReponse> findAgeSortByRate() {
+        return new ResponseListData(influencerService.findAgeSortByRate());
+    }
+
+    @GetMapping("/findAllInfluencer")
+    public ResponseListData<FindAllInfluencerResponse> findAllInfluencer() {
+        return new ResponseListData(influencerService.findAllInfluencerResponse());
     }
 
 }

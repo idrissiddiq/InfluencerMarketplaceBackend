@@ -8,6 +8,8 @@ package com.InfluencerMarketpalce.serverside.service;
 import com.InfluencerMarketpalce.serverside.model.*;
 import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
+import com.InfluencerMarketpalce.serverside.model.response.CalculateAgeReponse;
+import com.InfluencerMarketpalce.serverside.model.response.FindAllInfluencerResponse;
 import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
@@ -73,12 +75,12 @@ public class InfluencerService extends ResponseStatus {
         User user = userRepository.findByUsername(name);
         Optional<Influencer> temp = influencerRepository.findAllByEmail(request.getEmail());
         if (temp.isPresent() && temp.get().getEmail() != user.getInfluencer().getEmail()) {
-            return new ResponseMessage<>("Error -  Email Already Registered", new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType(), request.getUsername()));
+            return new ResponseMessage<>("Error -  Email Already Registered", new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType()));
         }
-        Optional<User> tempUser = userRepository.findAllByUsername(request.getUsername());
-        if (tempUser.isPresent() && tempUser.get().getUsername() != user.getUsername()) {
-            return new ResponseMessage<>("Error -  Username Already Registered", new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType(), request.getUsername()));
-        }
+//        Optional<User> tempUser = userRepository.findAllByUsername(request.getUsername());
+//        if (tempUser.isPresent() && tempUser.get().getUsername() != user.getUsername()) {
+//            return new ResponseMessage<>("Error -  Username Already Registered", new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType(), request.getUsername()));
+//        }
         Influencer influencer = new Influencer();
         influencer.setId(user.getId());
         influencer.setFullname(request.getFullname());
@@ -87,11 +89,11 @@ public class InfluencerService extends ResponseStatus {
         influencer.setEmail(request.getEmail());
         Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
         influencer.setInfluenceTypes(temp_type);
-        influencer.setCampaigns(user.getInfluencer().getCampaigns());
+//        influencer.setCampaigns(user.getInfluencer().getCampaigns());
         Job job = jobRepository.findByIdJob("I");
         influencer.setJob(job);
         influencerRepository.save(influencer);
-        return new ResponseMessage<>("Influencer Profile Updated",new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType(), request.getUsername()));
+        return new ResponseMessage<>("Influencer Profile Updated",new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType()));
     }
 
     public ResponseMessage editProfilePoto(ChangeProfilePhotoRequest request){
@@ -120,6 +122,11 @@ public class InfluencerService extends ResponseStatus {
         return new ResponseMessage<>("Profile Photo Updated",new ChangeProfilePhotoRequest(influencerFilePath.getProfile()));
     }
 
+    public InfluencerFilePath getProfilePhotoById(Long id){
+        InfluencerFilePath influencerFilePath = influencerFilePathRepository.getMyProfilePhotoPath(id);
+        return influencerFilePath;
+    }
+
     public List<Influencer> findAll() {
         return influencerRepository.findAll();
     }
@@ -131,4 +138,14 @@ public class InfluencerService extends ResponseStatus {
     public List<Influencer> findAllSortByRate() {
         return influencerRepository.findAllSortByRate();
     }
+
+    public List<FindAllInfluencerResponse> findAllInfluencerResponse(){
+        return influencerRepository.findAllInfluencer();
+    }
+
+    public List<CalculateAgeReponse> findAgeSortByRate() {
+        return influencerRepository.findAgeSortByRate();
+    }
+
+
 }
