@@ -15,6 +15,7 @@ com\InfluencerMarketpalce\serverside\model\request\EditProfileInfluencer.class
 com\InfluencerMarketpalce\serverside\controller\FileDownloadController.class
 com\InfluencerMarketpalce\serverside\utility\FileDownloadUtil.class
 com\InfluencerMarketpalce\serverside\controller\BrandController.class
+com\InfluencerMarketpalce\serverside\controller\InfluencerTypeController.class
 com\InfluencerMarketpalce\serverside\model\request\LoginRequestDto.class
 com\InfluencerMarketpalce\serverside\model\response\LoginResponseDto.class
 com\InfluencerMarketpalce\serverside\model\Role.class
@@ -24,6 +25,7 @@ com\InfluencerMarketpalce\serverside\repository\InfluencerRepository.class
 com\InfluencerMarketpalce\serverside\service\AppUserDetailService.class
 com\InfluencerMarketpalce\serverside\repository\RoleRepository.class
 com\InfluencerMarketpalce\serverside\model\request\RegisterBrandRequest.class
+com\InfluencerMarketpalce\serverside\controller\CampaignStatusController.class
 com\InfluencerMarketpalce\serverside\model\request\RegisterInfluencerRequest.class
 com\InfluencerMarketpalce\serverside\service\JobService.class
 com\InfluencerMarketpalce\serverside\controller\LoginController.class
@@ -79,9 +81,11 @@ com\InfluencerMarketpalce\serverside\repository\PrivilegeRepository.class
 com\InfluencerMarketpalce\serverside\service\CampaignService.class
 com\InfluencerMarketpalce\serverside\controller\FileUploadController.class
 com\InfluencerMarketpalce\serverside\model\UserBrand.class
+com\InfluencerMarketpalce\serverside\service\CampaignStatusService.class
 com\InfluencerMarketpalce\serverside\repository\UserRepository.class
 com\InfluencerMarketpalce\serverside\model\response\FindAllOpenCampaignResponse.class
 com\InfluencerMarketpalce\serverside\controller\JobController.class
 com\InfluencerMarketpalce\serverside\repository\UserBrandRepository.class
+com\InfluencerMarketpalce\serverside\service\InfluencerTypeService.class
 com\InfluencerMarketpalce\serverside\model\Brand.class
 com\InfluencerMarketpalce\serverside\ServersideApplication.class

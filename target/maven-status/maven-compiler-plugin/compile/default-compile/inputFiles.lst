@@ -10,6 +10,7 @@ D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\ser
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\InfluencerFilePathRepository.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\controller\FileDownloadController.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\InfluencerType.java
+D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\CampaignStatusService.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\property\FileStorageProperties.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\config\PasswordEncoderConfig.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\response\ResponseData.java
@@ -28,6 +29,7 @@ D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\ser
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\UserBrandRepository.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\response\GetProfilePhotoByIdResponse.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\InfluencerService.java
+D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\controller\InfluencerTypeController.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\CampaignStatus.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\response\FindAllInfluencerResponse.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\FileStorageService.java
@@ -68,6 +70,7 @@ D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\ser
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\RegistService.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\BrandFilePathRepository.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\request\EditProfileBrand.java
+D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\controller\CampaignStatusController.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\request\CreateCampaignRequest.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\Role.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\controller\LoginController.java
@@ -78,6 +81,7 @@ D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\ser
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\ContractRepository.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\BrandService.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\repository\ContractStatusRepository.java
+D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\service\InfluencerTypeService.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\exception\FileStorageException.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\response\ProfileDTO.java
 D:\Visi\InfluencerMarketplaceBackend\src\main\java\com\InfluencerMarketpalce\serverside\model\AppUserBrandDetail.java
