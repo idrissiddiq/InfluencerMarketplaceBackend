@@ -6,9 +6,12 @@
 package com.InfluencerMarketpalce.serverside.repository;
 
 import com.InfluencerMarketpalce.serverside.model.Influencer;
+import com.InfluencerMarketpalce.serverside.model.response.CalculateAgeReponse;
+import com.InfluencerMarketpalce.serverside.model.response.FindAllInfluencerResponse;
 import com.InfluencerMarketpalce.serverside.model.response.ProfileDTO;
 
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,77 +26,37 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InfluencerRepository extends JpaRepository<Influencer, Long> {
 
-
-    @Query(value = "SELECT * FROM TB_INFLUENCER WHERE JOB_ID != 'A'", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_influencer WHERE job_id != 'A'", nativeQuery = true)
     List<Influencer> findAllExceptAdmin();
-    
-    @Query(value = "SELECT COUNT(*) FROM TB_INFLUENCER WHERE EMAIL = ?1", nativeQuery = true)
+
+    @Query(value = "SELECT tb_influencer.fullname as \\\"fullname\\\", tb_influencer.city as \\\"city\\\", tb_influencer.engagement_rate as \\\"er\\\", tb_influencer.rate as \\\"rate\\\", (tb_influencer.rate / tb_influencer.campaign_done) as \\\"finalrate\\\", tb_user.username as \\\"username\\\", TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) as \\\"age\\\", tb_influencer.instagram as \\\"instagram\\\", tb_influencer.tiktok as \\\"tiktok\\\", tb_influencer.youtube as \\\"youtube\\\" FROM tb_influencer INNER JOIN tb_user ON tb_influencer.influencer_id=tb_user.influencer_id ORDER BY RATE DESC", nativeQuery = true)
+    List<FindAllInfluencerResponse> findAllInfluencer();
+
+    @Query(value = "SELECT * FROM tb_influencer ORDER BY rate DESC", nativeQuery = true)
+    List<Influencer> findAllSortByRate();
+
+    @Query(value = "SELECT TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) as \\\"age\\\" FROM tb_influencer ORDER BY RATE DESC", nativeQuery = true)
+    List<CalculateAgeReponse> findAgeSortByRate();
+
+    @Query(value = "SELECT COUNT(*) FROM tb_influencer WHERE email = ?1", nativeQuery = true)
     Long findEmail(String email);
 
-    @Query(value = "SELECT TB_INFLUENCER.EMPLOYEE_ID, EMAIL, FULLNAME, JOB_ID FROM TB_INFLUENCER JOIN employee_class \n"
-            + "on employee_class.employee_id = tb_employee.employee_id\n"
-            + "where employee_class.class_id =?1 AND job_id = 'P'", nativeQuery = true)
-    List<Influencer> findEmployeeByClassId(String id);
-
-    @Query(value = "SELECT tb_employee.employee_id, email, fullname, job_id FROM `tb_employee` \n"
-            + "left join employee_class on employee_class.employee_id = tb_employee.employee_id\n"
-            + "WHERE job_id = 'P' and employee_class.class_id is null", nativeQuery = true)
-    List<Influencer> findAllEmployeeWithNoClass();
-
-    @Query(value = "SELECT * FROM `tb_employee` \n"
-            + "WHERE job_id = 'T'", nativeQuery = true)
-    List<Influencer> findAllTrainer();
+    @Query(value = "SELECT * FROM tb_influencer WHERE email = ?1", nativeQuery = true)
+    Optional<Influencer> findAllByEmail(String email);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM EMPLOYEE_CLASS WHERE employee_id = :id AND class_id = :classId",
-            nativeQuery = true)
-    void removeEmployeeFromClass(@Param("id") Long employeeId, @Param("classId") String classId);
-
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM TRAINER_SUBJECT WHERE trainer_subject_id = :id",
-            nativeQuery = true)
-    void removeTrainerFromClass(@Param("id") Long trainerSubjectId);
-
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO employee_class (employee_id, class_id) VALUES (:employeeId, :classId)",
-            nativeQuery = true)
-    void insertEmployeeToClass(@Param("employeeId") Long employeeId, @Param("classId") String classId);
-
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO trainer_subject (employee_id, subject_id, class_id) VALUES ( :employeeId , :subjectId , :classId )",
-            nativeQuery = true)
-    void insertTrainerToSubject(@Param("employeeId") Long employeeId,
-            @Param("subjectId") Long subjectId,
-            @Param("classId") String classId);
-
-    @Query(value = "select tb_user.employee_id as \"idEmployee\", tb_role.role_name as \"roleName\", tb_user.username as \"username\" from tb_user\n"
-            + "JOIN user_role ON user_role.employee_id = tb_user.employee_id\n"
-            + "JOIN tb_role on user_role.role_id = tb_role.role_id\n"
-            + "where tb_user.employee_id =?1", nativeQuery = true)
-    ProfileDTO getProfileInfo(Long id);
-
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE TB_USER SET password = :password where username = :username",
+    @Query(value = "UPDATE tb_user SET password = :password where username = :username",
             nativeQuery = true)
     void changePassword(@Param("password") String password,
             @Param("username") String username);
 
-    @Query(value = "SELECT PASSWORD FROM TB_USER WHERE USERNAME =? 1", nativeQuery = true)
+    @Query(value = "SELECT password FROM tb_user WHERE username =? 1", nativeQuery = true)
     String getPassword(String username);
 
-    @Query(value = "SELECT TB_INFLUENCER FROM TB_EMPLOYEE WHERE EMAIL = ?1", nativeQuery = true)
+    @Query(value = "SELECT influencer_id FROM tb_influencer WHERE email = ?1", nativeQuery = true)
     Long findIdByEmail (String email);
     
-    @Query(value = "SELECT EMAIL FROM TB_INFLUENCER WHERE USER_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT email FROM tb_influencer WHERE user_id = ?1", nativeQuery = true)
     String findEmailById (Long id);
-    
-
-    @Query(value = "SELECT count(*) from trainer_subject \n"
-            + "where class_id = ?1 and employee_id = ?2 and subject_id = ?3", nativeQuery = true)
-    Long checkIfTrainerAlreadyAssigned(String classId, Long employeeId, Long subjectId);
 }

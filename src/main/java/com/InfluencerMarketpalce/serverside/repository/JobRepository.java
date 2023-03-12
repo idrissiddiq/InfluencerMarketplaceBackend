@@ -18,9 +18,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository 
 public interface JobRepository extends JpaRepository<Job,String>{
-    @Query(value = "SELECT * FROM TB_JOB WHERE JOB_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_job WHERE job_id = ?1", nativeQuery = true)
     Job findByIdJob(String id);
     
-    @Query(value = "SELECT * FROM TB_JOB WHERE JOB_ID != 'A'", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_job WHERE job_id != 'A'", nativeQuery = true)
     List<Job> findAllExceptAdmin();
 }

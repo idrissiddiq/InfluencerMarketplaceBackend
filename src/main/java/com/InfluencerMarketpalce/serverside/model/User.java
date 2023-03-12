@@ -30,14 +30,9 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "influencer_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Id
-    @Column(name = "brand_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long brandId;
 
     @Column(name = "username")
     private String username;
@@ -47,20 +42,14 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "influencer_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Influencer influencer;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @MapsId
-    @JoinColumn(name = "brand_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Brand brand;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "influencer_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Role> roles;
