@@ -5,10 +5,7 @@
  */
 package com.InfluencerMarketpalce.serverside.controller;
 
-import com.InfluencerMarketpalce.serverside.model.request.ForgotPasswordRequest;
-import com.InfluencerMarketpalce.serverside.model.request.InfluencerChangePasswordRequest;
-import com.InfluencerMarketpalce.serverside.model.request.RegisterBrandRequest;
-import com.InfluencerMarketpalce.serverside.model.request.RegisterInfluencerRequest;
+import com.InfluencerMarketpalce.serverside.model.request.*;
 import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.service.RegistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +39,11 @@ public class RegistController {
     @PostMapping("/brand")
     public ResponseMessage<RegisterBrandRequest> registerBrand(@RequestBody RegisterBrandRequest userBrand) {
         return registService.registBrand(userBrand);
+    }
+
+    @PostMapping("/admin")
+    public ResponseMessage<RegisterAdminRequest> registerAdmin(@RequestBody RegisterAdminRequest request) {
+        return registService.registAdmin(request);
     }
     
     @PutMapping("/influencer/forgot")

@@ -2,12 +2,9 @@ package com.InfluencerMarketpalce.serverside.controller;
 
 import com.InfluencerMarketpalce.serverside.model.Contract;
 import com.InfluencerMarketpalce.serverside.model.request.ApproveContractRequest;
-import com.InfluencerMarketpalce.serverside.model.request.CreateContractRequest;
-import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseListData;
 import com.InfluencerMarketpalce.serverside.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,12 +33,27 @@ public class ContractController {
     }
 
     @PostMapping("/{id}")
-    public String createContract(@RequestBody CreateContractRequest request, @PathVariable Long id) {
-        return contractService.createContract(request, id);
+    public String createContract(@PathVariable Long id) {
+        return contractService.createContract(id);
     }
 
     @PutMapping("/{id}")
     public String approveContract(@RequestBody ApproveContractRequest request, @PathVariable Long id){
         return contractService.approveContract(request, id);
+    }
+
+    @PutMapping("/admin/{id}")
+    public String approveContractByAdmin(@PathVariable Long id){
+        return contractService.approveContractByAdmin(id);
+    }
+
+    @PutMapping("/influencer/{id}")
+    public String submitContractProve(@PathVariable Long id){
+        return contractService.submitContractProve(id);
+    }
+
+    @PutMapping("/admin/done/{id}")
+    public String doneContractByAdmin(@PathVariable Long id){
+        return contractService.doneContractByAdmin(id);
     }
 }

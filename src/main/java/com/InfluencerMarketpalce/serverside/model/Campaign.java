@@ -21,23 +21,8 @@ public class Campaign {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "start_instagram")
-    private Long startIg;
-
-    @Column(name = "end_instagram")
-    private Long endIg;
-
-    @Column(name = "start_tiktok")
-    private Long startTiktok;
-
-    @Column(name = "end_tiktok")
-    private Long endTiktok;
-
-    @Column(name = "start_youtube")
-    private Long startYt;
-
-    @Column(name = "end_youtube")
-    private Long endYt;
+    @Column(name = "budget")
+    private Long budget;
 
     @ManyToOne
     @JoinColumn(name = "campaign_status_id")
@@ -58,10 +43,11 @@ public class Campaign {
 
     }
 
-    public Campaign(Long id, String title, String description, CampaignStatus campaignStatus, Brand brand, Set<Influencer> influencers, Set<Contract> contracts) {
+    public Campaign(Long id, String title, String description, Long budget, CampaignStatus campaignStatus, Brand brand, Set<Influencer> influencers, Set<Contract> contracts) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.budget = budget;
         this.campaignStatus = campaignStatus;
         this.brand = brand;
         this.influencers = influencers;
@@ -90,6 +76,14 @@ public class Campaign {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Long budget) {
+        this.budget = budget;
     }
 
     public CampaignStatus getCampaignStatus() {

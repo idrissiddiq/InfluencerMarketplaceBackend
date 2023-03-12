@@ -12,12 +12,12 @@ import java.util.Optional;
 public interface UserBrandRepository extends JpaRepository<UserBrand, Long> {
     UserBrand findByUsername(String username);
 
-    @Query(value = "SELECT COUNT(*) FROM TB_USER_BRAND WHERE USERNAME = ?1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM tb_user_brand WHERE username = ?1", nativeQuery = true)
     Long countByUsername(String username);
 
-    @Query(value = "SELECT * FROM TB_USER_BRAND WHERE BRAND_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_user_brand WHERE brand_id = ?1", nativeQuery = true)
     UserBrand findUsernameById(Long brandId);
 
-    @Query(value = "SELECT * FROM TB_USER_BRAND WHERE USERNAME = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_user_brand WHERE username = ?1", nativeQuery = true)
     Optional<UserBrand> findAllByUsername(String username);
 }

@@ -14,13 +14,13 @@ import java.util.Set;
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long>{
-    @Query(value = "SELECT COUNT(*) FROM TB_BRAND WHERE EMAIL = ?1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM tb_brand WHERE email = ?1", nativeQuery = true)
     Long findEmail(String email);
 
-    @Query(value = "SELECT BRAND_ID FROM TB_BRAND WHERE EMAIL = ?1", nativeQuery = true)
+    @Query(value = "SELECT BRAND_ID FROM tb_brand WHERE email = ?1", nativeQuery = true)
     Long findIdByEmail (String email);
 
-    @Query(value = "SELECT * FROM TB_BRAND WHERE EMAIL = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_brand WHERE email = ?1", nativeQuery = true)
     Optional<Brand> findAllByEmail(String email);
 
     Brand getById(Long id);

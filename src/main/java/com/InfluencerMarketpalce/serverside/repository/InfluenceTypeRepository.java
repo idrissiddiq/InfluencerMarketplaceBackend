@@ -16,16 +16,16 @@ public interface InfluenceTypeRepository extends JpaRepository<InfluencerType, L
 
     InfluencerType getByName(String name);
 
-    @Query(value = "SELECT TYPE_ID FROM INFLUENCER_TYPE WHERE INFLUENCER_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT type_id FROM tb_influence_type WHERE influencer_id = ?1", nativeQuery = true)
     List<Long> findMyTypeId(Long id);
 
-    @Query(value = "SELECT * FROM TB_INFLUENCE_TYPE WHERE TYPE_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_influence_type WHERE type_id = ?1", nativeQuery = true)
     InfluencerType getMyTypeName(Long id);
 
-    @Query(value = "SELECT * FROM INFLUENCER_TYPE WHERE TYPE_ID = ?1 AND INFLUENCER_ID = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_influence_type WHERE type_id = ?1 AND influencer_id = ?2", nativeQuery = true)
     Set<InfluencerType> getByTypeInfluencerId(Long typeId, Long influencerId);
 
-    @Query(value = "SELECT * FROM INFLUENCER_TYPE WHERE TYPE_ID = ?1 AND INFLUENCER_ID = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_influence_type WHERE type_id = ?1 AND influencer_id = ?2", nativeQuery = true)
     Set<Influencer> getByTypeInfluencerId2(Long typeId, Long influencerId);
 
 }

@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface InfluencerFilePathRepository extends JpaRepository<InfluencerFilePath, Long> {
-    @Query(value = "SELECT * FROM TB_INFLUENCER_FILE_PATH WHERE INFLUENCER_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_influencer_file_path WHERE influencer_id = ?1", nativeQuery = true)
     InfluencerFilePath getMyProfilePhotoPath(Long id);
 }

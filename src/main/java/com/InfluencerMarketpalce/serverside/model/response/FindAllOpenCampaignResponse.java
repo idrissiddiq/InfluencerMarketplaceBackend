@@ -6,10 +6,5 @@ public interface FindAllOpenCampaignResponse {
     String getDescription();
     String getCompany();
     String getName();
-    Long getStartIg();
-    Long getEndIg();
-    Long getStartTiktok();
-    Long getEndTiktok();
-    Long getStartYt();
-    Long getEndYt();
+    Long getBudget();
 }

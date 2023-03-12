@@ -6,9 +6,11 @@
 package com.InfluencerMarketpalce.serverside.service;
 
 import com.InfluencerMarketpalce.serverside.model.User;
+import com.InfluencerMarketpalce.serverside.model.UserAdmin;
 import com.InfluencerMarketpalce.serverside.model.UserBrand;
 import com.InfluencerMarketpalce.serverside.model.request.LoginRequestDto;
 import com.InfluencerMarketpalce.serverside.model.response.LoginResponseDto;
+import com.InfluencerMarketpalce.serverside.repository.UserAdminRepository;
 import com.InfluencerMarketpalce.serverside.repository.UserBrandRepository;
 import com.InfluencerMarketpalce.serverside.repository.UserRepository;
 import java.util.List;
@@ -31,17 +33,21 @@ public class LoginService {
 
     private MyUserDetailService myUserDetailService;
     private MyUserBrandDetailService myUserBrandDetailService;
+    private MyUserAdminDetailService myUserAdminDetailService;
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
     private UserBrandRepository userBrandRepository;
+    private UserAdminRepository userAdminRepository;
 
     @Autowired
-    public LoginService(MyUserDetailService myUserDetailService, MyUserBrandDetailService myUserBrandDetailService, AuthenticationManager authenticationManager, UserRepository userRepository, UserBrandRepository userBrandRepository) {
+    public LoginService(MyUserDetailService myUserDetailService, MyUserBrandDetailService myUserBrandDetailService, MyUserAdminDetailService myUserAdminDetailService, AuthenticationManager authenticationManager, UserRepository userRepository, UserBrandRepository userBrandRepository, UserAdminRepository userAdminRepository) {
         this.myUserDetailService = myUserDetailService;
         this.myUserBrandDetailService = myUserBrandDetailService;
+        this.myUserAdminDetailService = myUserAdminDetailService;
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.userBrandRepository = userBrandRepository;
+        this.userAdminRepository = userAdminRepository;
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequest) {
@@ -76,5 +82,22 @@ public class LoginService {
                 .collect(Collectors.toList());
 
         return new LoginResponseDto(userBrand.getId(), authorities);
+    }
+
+    public LoginResponseDto loginAdmin(LoginRequestDto loginRequest) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        Authentication auth = authenticationManager.authenticate(authToken);
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(auth);
+
+        UserAdmin userAdmin = userAdminRepository.findByUsername(loginRequest.getUsername());
+        UserDetails userDetails = myUserAdminDetailService.loadUserByUsername(loginRequest.getUsername());
+
+        List<String> authorities = userDetails.getAuthorities()
+                .stream()
+                .map(authority -> authority.getAuthority())
+                .collect(Collectors.toList());
+
+        return new LoginResponseDto(userAdmin.getId(), authorities);
     }
 }

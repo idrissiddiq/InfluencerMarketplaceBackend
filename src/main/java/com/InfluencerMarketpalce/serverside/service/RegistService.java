@@ -6,10 +6,7 @@
 package com.InfluencerMarketpalce.serverside.service;
 
 import com.InfluencerMarketpalce.serverside.model.*;
-import com.InfluencerMarketpalce.serverside.model.request.ForgotPasswordRequest;
-import com.InfluencerMarketpalce.serverside.model.request.InfluencerChangePasswordRequest;
-import com.InfluencerMarketpalce.serverside.model.request.RegisterBrandRequest;
-import com.InfluencerMarketpalce.serverside.model.request.RegisterInfluencerRequest;
+import com.InfluencerMarketpalce.serverside.model.request.*;
 import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
@@ -30,8 +27,10 @@ import org.springframework.stereotype.Service;
 public class RegistService extends ResponseStatus {
     private InfluencerRepository influencerRepository;
     private BrandRepository brandRepository;
+    private AdminRepository adminRepository;
     private UserRepository userRepository;
     private UserBrandRepository userBrandRepository;
+    private UserAdminRepository userAdminRepository;
     private JobRepository jobRepository;
     private PasswordEncoder encoder;
     private RoleRepository roleRepository;
@@ -42,11 +41,13 @@ public class RegistService extends ResponseStatus {
     
     
     @Autowired
-    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository) {
+    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, AdminRepository adminRepository,UserRepository userRepository, UserBrandRepository userBrandRepository, UserAdminRepository userAdminRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository) {
         this.influencerRepository = influencerRepository;
         this.brandRepository = brandRepository;
+        this.adminRepository = adminRepository;
         this.userRepository = userRepository;
         this.userBrandRepository = userBrandRepository;
+        this.userAdminRepository = userAdminRepository;
         this.jobRepository = jobRepository;
         this.encoder = encoder;
         this.roleRepository = roleRepository;
@@ -101,6 +102,42 @@ public class RegistService extends ResponseStatus {
         userBrandRepository.save(userBrand);
         brandFilePathRepository.save(brandFilePath);
         return new ResponseMessage<>("Brand Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
+    }
+
+    public ResponseMessage<RegisterAdminRequest> registAdmin(RegisterAdminRequest request) {
+        long temp = adminRepository.findEmail(request.getEmail());
+        if (temp >= 1) {
+            return new ResponseMessage<>("Error -  Email Already Registered", new RegisterAdminRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
+        }
+        long tempUser = userAdminRepository.countByUsername(request.getUsername());
+        if (tempUser >= 1) {
+            return new ResponseMessage<>("Error -  Username Already Registered", new RegisterAdminRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
+        }
+        Admin admin = new Admin();
+        admin.setId(request.getId());
+        admin.setFullname(request.getFullname());
+        admin.setEmail(request.getEmail());
+        Job job = jobRepository.findByIdJob("A");
+        admin.setBrandjob(job);
+
+        UserAdmin userAdmin = new UserAdmin();
+        userAdmin.setAdmin(admin);
+        userAdmin.setId(request.getId());
+        userAdmin.setUsername(request.getUsername());
+        int length = 10;
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+
+        System.out.println("Hasil Generate : " + generatedString);
+        userAdmin.setPassword(encoder.encode(generatedString));
+        Set<Role> temp_role = roleRepository.findByName("Admin");
+        userAdmin.setRoles(temp_role);
+        admin.setUserAdmin(userAdmin);
+        //emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
+        adminRepository.save(admin);
+        userAdminRepository.save(userAdmin);
+        return new ResponseMessage<>("Admin Registered", new RegisterAdminRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
     }
     
     public ResponseMessage<RegisterInfluencerResponse> regist(RegisterInfluencerRequest request) {

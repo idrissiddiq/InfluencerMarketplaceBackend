@@ -5,6 +5,7 @@
  */
 package com.InfluencerMarketpalce.serverside.config;
 
+import com.InfluencerMarketpalce.serverside.service.AppUserAdminDetailService;
 import com.InfluencerMarketpalce.serverside.service.AppUserBrandDetailService;
 import com.InfluencerMarketpalce.serverside.service.AppUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AppUserDetailService appUserDetailService;
     private AppUserBrandDetailService appUserBrandDetailService;
+    private AppUserAdminDetailService appUserAdminDetailService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AppSecurityConfig(AppUserDetailService appUserDetailService, AppUserBrandDetailService appUserBrandDetailService, PasswordEncoder passwordEncoder) {
+    public AppSecurityConfig(AppUserDetailService appUserDetailService, AppUserBrandDetailService appUserBrandDetailService, AppUserAdminDetailService appUserAdminDetailService, PasswordEncoder passwordEncoder) {
         this.appUserDetailService = appUserDetailService;
         this.appUserBrandDetailService = appUserBrandDetailService;
+        this.appUserAdminDetailService = appUserAdminDetailService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -64,6 +67,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(appUserDetailService).passwordEncoder(passwordEncoder);
         auth.userDetailsService(appUserBrandDetailService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(appUserAdminDetailService).passwordEncoder(passwordEncoder);
     }
 
     @Override

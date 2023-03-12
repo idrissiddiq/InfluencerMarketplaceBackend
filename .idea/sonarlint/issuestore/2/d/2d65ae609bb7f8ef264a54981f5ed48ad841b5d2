@@ -1,10 +1,0 @@
-
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(╝┌└и
-Z
-java:S2583E"DChange this condition so that it does not always evaluate to "false"(┴И┌С
-w
-java:S41441"aUpdate this method so that its implementation is not identical to "findAllMyContract" on line 35.(ахиц
-Р
-java:S2159E"zRemove this call to "equals"; comparisons against null always return false; consider using '== null' to check for nullity.(┴И┌С
-7
-java:S1116X"Remove this empty statement.(╕┬║ы¤    

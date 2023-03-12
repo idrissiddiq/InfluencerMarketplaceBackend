@@ -1,8 +1,10 @@
 package com.InfluencerMarketpalce.serverside.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_contract")
@@ -39,11 +41,15 @@ public class Contract {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<ContractFilePath> contractFilePaths;
+
     public Contract(){
 
     }
 
-    public Contract(Long id, String startDate, String endDate, Long budget, ContractStatus contractStatus, Campaign campaign, Influencer influencer, Brand brand) {
+    public Contract(Long id, String startDate, String endDate, Long budget, ContractStatus contractStatus, Campaign campaign, Influencer influencer, Brand brand, Set<ContractFilePath> contractFilePaths) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -52,6 +58,7 @@ public class Contract {
         this.campaign = campaign;
         this.influencer = influencer;
         this.brand = brand;
+        this.contractFilePaths = contractFilePaths;
     }
 
     public Long getId() {
@@ -116,5 +123,13 @@ public class Contract {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public Set<ContractFilePath> getContractFilePaths() {
+        return contractFilePaths;
+    }
+
+    public void setContractFilePaths(Set<ContractFilePath> contractFilePaths) {
+        this.contractFilePaths = contractFilePaths;
     }
 }

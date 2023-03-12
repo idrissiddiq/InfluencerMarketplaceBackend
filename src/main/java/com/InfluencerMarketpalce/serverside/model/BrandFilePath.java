@@ -14,7 +14,6 @@ public class BrandFilePath {
 
     @Column(name = "profile_photo")
     private String profile;
-
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "brand_id")
