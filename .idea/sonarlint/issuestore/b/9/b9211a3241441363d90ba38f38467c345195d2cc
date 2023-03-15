@@ -1,31 +1,0 @@
-
-J
-java:S3740+"/Provide the parametrized type for this generic.(‰ùÑÛÿÿÿÿÿ
-J
-java:S3740L"/Provide the parametrized type for this generic.(ç›”÷ÿÿÿÿÿ
-r
-java:S1488'"\Immediately return this expression instead of assigning it to the temporary variable "data".(­×øî
-R
-java:S49730"<Strings and Boxed types should be compared using "equals()".(²ÁÀ˜
-R
-java:S49734"<Strings and Boxed types should be compared using "equals()".(«ŒˆÒ
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¼ÚÀ¨
-7
-java:S1116,"Remove this empty statement.(¸Âºëýÿÿÿÿ
-7
-java:S1116B"Remove this empty statement.(¸Âºëýÿÿÿÿ
-Q	java:S125F"<This block of commented-out lines of code should be removed.(“þðÅ
-N
-java:S1854P"8Remove this useless assignment to local variable "temp".(“ÀÁÔ
-7
-java:S1116M"Remove this empty statement.(¸Âºëýÿÿÿÿ
-?
-java:S1481P")Remove this unused "temp" local variable.(“ÀÁÔ
-Q	java:S125Q"<This block of commented-out lines of code should be removed.(®•¦²
-€
-java:S1128"eRemove this unused import 'com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer'.(û§ò‡øÿÿÿÿ
-J
-java:S1128
-"5Remove this unused import 'org.apache.catalina.User'.(›ân
-E
-java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ

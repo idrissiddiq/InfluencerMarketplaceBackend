@@ -54,6 +54,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/influencer/profile/photo/**").permitAll()
                 .antMatchers("/api/campaign/1").permitAll()
                 .antMatchers("/api/campaign/open").permitAll()
+                .antMatchers("/api/influencerType").permitAll()
                 //                .antMatchers("/api/**").permitAll()
                 .antMatchers("/**", "/logout").authenticated()
                 .anyRequest().authenticated()
