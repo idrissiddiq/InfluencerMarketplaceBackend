@@ -14,7 +14,6 @@ com\InfluencerMarketpalce\serverside\controller\CampaignStatusController.class
 com\InfluencerMarketpalce\serverside\model\request\RegisterInfluencerRequest.class
 com\InfluencerMarketpalce\serverside\service\JobService.class
 com\InfluencerMarketpalce\serverside\controller\LoginController.class
-com\InfluencerMarketpalce\serverside\utility\FileUploadUtil.class
 com\InfluencerMarketpalce\serverside\model\BrandFilePath.class
 com\InfluencerMarketpalce\serverside\model\response\CalculateAgeReponse.class
 com\InfluencerMarketpalce\serverside\service\AppUserBrandDetailService.class
@@ -59,8 +58,6 @@ com\InfluencerMarketpalce\serverside\model\Admin.class
 com\InfluencerMarketpalce\serverside\model\UserAdmin.class
 com\InfluencerMarketpalce\serverside\service\EmailService.class
 com\InfluencerMarketpalce\serverside\model\request\EditProfileInfluencer.class
-com\InfluencerMarketpalce\serverside\controller\FileDownloadController.class
-com\InfluencerMarketpalce\serverside\utility\FileDownloadUtil.class
 com\InfluencerMarketpalce\serverside\controller\InfluencerTypeController.class
 com\InfluencerMarketpalce\serverside\model\request\LoginRequestDto.class
 com\InfluencerMarketpalce\serverside\model\Role.class
@@ -78,7 +75,6 @@ com\InfluencerMarketpalce\serverside\repository\ContractFilePathRepository.class
 com\InfluencerMarketpalce\serverside\model\Job.class
 com\InfluencerMarketpalce\serverside\model\Contract.class
 com\InfluencerMarketpalce\serverside\model\request\CreateCampaignRequest.class
-com\InfluencerMarketpalce\serverside\property\FileStorageProperties.class
 com\InfluencerMarketpalce\serverside\model\AppUserBrandDetail.class
 com\InfluencerMarketpalce\serverside\model\InfluencerFilePath.class
 com\InfluencerMarketpalce\serverside\model\request\UpdateCampaignRequest.class
@@ -92,7 +88,6 @@ com\InfluencerMarketpalce\serverside\model\response\ResponseData.class
 com\InfluencerMarketpalce\serverside\repository\UserAdminRepository.class
 com\InfluencerMarketpalce\serverside\repository\PrivilegeRepository.class
 com\InfluencerMarketpalce\serverside\service\CampaignService.class
-com\InfluencerMarketpalce\serverside\controller\FileUploadController.class
 com\InfluencerMarketpalce\serverside\repository\UserRepository.class
 com\InfluencerMarketpalce\serverside\repository\AdminRepository.class
 com\InfluencerMarketpalce\serverside\controller\JobController.class

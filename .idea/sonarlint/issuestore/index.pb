@@ -3,8 +3,6 @@
 _src/main/java/com/InfluencerMarketpalce/serverside/model/request/ChangeProfilePhotoRequest.java,f\2\f230d2fb3ac848d1789ad3a2c552d73ddb35dcc2
 å
 \src/main/java/com/InfluencerMarketpalce/serverside/model/response/RegisterBrandResponse.java,b\6\b683c27370af80ab90f40b34b38a7cdc16f91c40
-á
-Wsrc/main/java/com/InfluencerMarketpalce/serverside/controller/FileUploadController.java,5\8\587a2fb959939af6888bbafecc230db0a880efa9
 Å
 Qsrc/main/java/com/InfluencerMarketpalce/serverside/model/response/ProfileDTO.java,6\3\6358f7d3c3f6ec0a7b3a795587511a6bcd51e143
 Ü
@@ -39,8 +37,6 @@ w
 Gsrc/main/java/com/InfluencerMarketpalce/serverside/model/UserBrand.java,e\c\ec74c066290006bc6c75f23c5f89971b7a61d295
 ã
 [src/main/java/com/InfluencerMarketpalce/serverside/controller/CampaignStatusController.java,9\9\9975e60e417a512625060f51aafaf0f7b69e25f4
-â
-Ysrc/main/java/com/InfluencerMarketpalce/serverside/controller/FileDownloadController.java,a\2\a27823ff78b6abf9b60d24891610306bf92c6e10
 á
 Wsrc/main/java/com/InfluencerMarketpalce/serverside/service/response/ResponseStatus.java,3\2\322f3fa736734a9346437a0c564814bf60986e2a
 Ñ
