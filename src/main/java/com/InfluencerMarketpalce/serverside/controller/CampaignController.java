@@ -30,8 +30,8 @@ public class CampaignController {
     }
 
     @GetMapping("/me")
-    public ResponseListData<Campaign> findAllByBrand(Authentication authentication) {
-        return new ResponseListData(campaignService.findAllByBrand(authentication));
+    public ResponseListData<Campaign> findAllByBrand() {
+        return new ResponseListData(campaignService.findAllByBrand());
     }
 
     @GetMapping("/search/{id}")

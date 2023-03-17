@@ -42,7 +42,8 @@ public class CampaignService extends ResponseStatus {
         return data;
     }
 
-    public List<Campaign> findAllByBrand(Authentication authentication) {
+    public List<Campaign> findAllByBrand() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
         String name = authentication.getName();
         UserBrand userBrand = userBrandRepository.findByUsername(name);
         return campaignRepository.findAllByBrand(userBrand.getId());

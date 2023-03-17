@@ -1,18 +1,0 @@
-
-J
-java:S3740Q"/Provide the parametrized type for this generic.(…ÿÿÿÿÿ
-r
-java:S1488)"\Immediately return this expression instead of assigning it to the temporary variable "data".(›Úâù
-R
-java:S4973Z"<Strings and Boxed types should be compared using "equals()".(“¦ŠÛ
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¼ÚÀ¨
-^
-java:S2583m"CChange this condition so that it does not always evaluate to "true"(†³òëùÿÿÿÿ
-7
-java:S1116<"Remove this empty statement.(¸Âºëıÿÿÿÿ
-7
-java:S1116F"Remove this empty statement.(¸Âºëıÿÿÿÿ
-7
-java:S1116R"Remove this empty statement.(¸Âºëıÿÿÿÿ
-•
-java:S2159m"zRemove this call to "equals"; comparisons against null always return false; consider using '== null' to check for nullity.(†³òëùÿÿÿÿ
