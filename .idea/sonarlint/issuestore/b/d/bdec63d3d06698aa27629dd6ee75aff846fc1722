@@ -1,29 +1,0 @@
-
-E
-java:S3740H"/Provide the parametrized type for this generic.(Î·¨Þ
-J
-java:S3740c"/Provide the parametrized type for this generic.(ç›”÷ÿÿÿÿÿ
-k	java:S117Z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­Ø…œûÿÿÿÿ
-w
-java:S14888"\Immediately return this expression instead of assigning it to the temporary variable "data".(…¦„Ùûÿÿÿÿ
-…
-java:S1488~"jImmediately return this expression instead of assigning it to the temporary variable "influencerFilePath".(Ç”Å·úÿÿÿÿ
-R
-java:S4973M"<Strings and Boxed types should be compared using "equals()".(®âš
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¼ÚÀ¨
-7
-java:S1116I"Remove this empty statement.(¸Âºëýÿÿÿÿ
-Q	java:S125P"<This block of commented-out lines of code should be removed.(íŠÆÉ
-V	java:S125\"<This block of commented-out lines of code should be removed.(ýâ™ùÿÿÿÿ
-N
-java:S1854g"8Remove this useless assignment to local variable "temp".(¬ù³ö
-7
-java:S1116d"Remove this empty statement.(¸Âºëýÿÿÿÿ
-?
-java:S1481g")Remove this unused "temp" local variable.(¬ù³ö
-Q	java:S125h"<This block of commented-out lines of code should be removed.(®•¦²
-7
-java:S1116s"Remove this empty statement.(¸Âºëýÿÿÿÿ
-Q	java:S125w"<This block of commented-out lines of code should be removed.(“þðÅ
-A
-java:S1068'"+Remove this unused "encoder" private field.(øÿÊÉ
