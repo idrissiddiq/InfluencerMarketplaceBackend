@@ -15,6 +15,8 @@ import com.InfluencerMarketpalce.serverside.service.InfluencerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  *
  * @author ASUS
@@ -85,5 +87,4 @@ public class InfluencerController {
     public ResponseListData<FindAllInfluencerResponse> findAllInfluencer() {
         return new ResponseListData(influencerService.findAllInfluencerResponse());
     }
-
 }

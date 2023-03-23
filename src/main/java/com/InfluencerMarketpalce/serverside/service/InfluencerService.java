@@ -14,10 +14,7 @@ import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
 import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -146,6 +143,4 @@ public class InfluencerService extends ResponseStatus {
     public List<CalculateAgeReponse> findAgeSortByRate() {
         return influencerRepository.findAgeSortByRate();
     }
-
-
 }
