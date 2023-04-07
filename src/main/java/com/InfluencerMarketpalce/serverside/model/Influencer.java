@@ -27,6 +27,18 @@ public class Influencer {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "province")
+    private String province;
+
+    @Column(name = "kecamatan")
+    private String kecamatan;
+
+    @Column(name = "kelurahan")
+    private String kelurahan;
+
+    @Column(name = "detail_address")
+    private String detailAddress;
+
     @Column(name = "rate")
     private Long rate;
 
@@ -44,6 +56,9 @@ public class Influencer {
 
     @Column(name = "tiktok")
     private String tiktok;
+
+    @Column(name = "facebook")
+    private String facebook;
 
     @ManyToOne
     @JoinColumn(name = "job_id")
@@ -84,17 +99,23 @@ public class Influencer {
     public Influencer() {
     }
 
-    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, Long rate, String er, String instagram, String youtube, String tiktok, Job job, User user, InfluencerFilePath influencerFilePath, Set<InfluencerType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
+    public Influencer(Long id, String fullname, String email, LocalDate birthDate, String city, String province, String kecamatan, String kelurahan, String detailAddress, Long rate, Long cd, String er, String instagram, String youtube, String tiktok, String facebook, Job job, User user, InfluencerFilePath influencerFilePath, Set<InfluencerType> influenceTypes, Set<Campaign> campaigns, Set<Contract> contracts) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
         this.birthDate = birthDate;
         this.city = city;
+        this.province = province;
+        this.kecamatan = kecamatan;
+        this.kelurahan = kelurahan;
+        this.detailAddress = detailAddress;
         this.rate = rate;
+        this.cd = cd;
         this.er = er;
         this.instagram = instagram;
         this.youtube = youtube;
         this.tiktok = tiktok;
+        this.facebook = facebook;
         this.job = job;
         this.user = user;
         this.influencerFilePath = influencerFilePath;
@@ -143,6 +164,38 @@ public class Influencer {
         this.city = city;
     }
 
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getKecamatan() {
+        return kecamatan;
+    }
+
+    public void setKecamatan(String kecamatan) {
+        this.kecamatan = kecamatan;
+    }
+
+    public String getKelurahan() {
+        return kelurahan;
+    }
+
+    public void setKelurahan(String kelurahan) {
+        this.kelurahan = kelurahan;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
     public Long getRate() {
         return rate;
     }
@@ -167,6 +220,38 @@ public class Influencer {
         this.er = er;
     }
 
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public String getTiktok() {
+        return tiktok;
+    }
+
+    public void setTiktok(String tiktok) {
+        this.tiktok = tiktok;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
     public Job getJob() {
         return job;
     }
@@ -181,6 +266,14 @@ public class Influencer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public InfluencerFilePath getInfluencerFilePath() {
+        return influencerFilePath;
+    }
+
+    public void setInfluencerFilePath(InfluencerFilePath influencerFilePath) {
+        this.influencerFilePath = influencerFilePath;
     }
 
     public Set<InfluencerType> getInfluenceTypes() {
@@ -205,38 +298,6 @@ public class Influencer {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
-    }
-
-    public InfluencerFilePath getInfluencerFilePath() {
-        return influencerFilePath;
-    }
-
-    public void setInfluencerFilePath(InfluencerFilePath influencerFilePath) {
-        this.influencerFilePath = influencerFilePath;
-    }
-
-    public String getInstagram() {
-        return instagram;
-    }
-
-    public void setInstagram(String instagram) {
-        this.instagram = instagram;
-    }
-
-    public String getYoutube() {
-        return youtube;
-    }
-
-    public void setYoutube(String youtube) {
-        this.youtube = youtube;
-    }
-
-    public String getTiktok() {
-        return tiktok;
-    }
-
-    public void setTiktok(String tiktok) {
-        this.tiktok = tiktok;
     }
 }
 //done

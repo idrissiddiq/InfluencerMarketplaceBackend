@@ -1,7 +1,6 @@
 package com.InfluencerMarketpalce.serverside.repository;
 
 import com.InfluencerMarketpalce.serverside.model.UserAdmin;
-import com.InfluencerMarketpalce.serverside.model.UserBrand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

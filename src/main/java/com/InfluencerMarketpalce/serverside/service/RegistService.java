@@ -26,10 +26,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistService extends ResponseStatus {
     private InfluencerRepository influencerRepository;
-    private BrandRepository brandRepository;
     private AdminRepository adminRepository;
     private UserRepository userRepository;
-    private UserBrandRepository userBrandRepository;
     private UserAdminRepository userAdminRepository;
     private JobRepository jobRepository;
     private PasswordEncoder encoder;
@@ -41,12 +39,10 @@ public class RegistService extends ResponseStatus {
     
     
     @Autowired
-    public RegistService(InfluencerRepository influencerRepository, BrandRepository brandRepository, AdminRepository adminRepository,UserRepository userRepository, UserBrandRepository userBrandRepository, UserAdminRepository userAdminRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository) {
+    public RegistService(InfluencerRepository influencerRepository, AdminRepository adminRepository,UserRepository userRepository, UserAdminRepository userAdminRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository) {
         this.influencerRepository = influencerRepository;
-        this.brandRepository = brandRepository;
         this.adminRepository = adminRepository;
         this.userRepository = userRepository;
-        this.userBrandRepository = userBrandRepository;
         this.userAdminRepository = userAdminRepository;
         this.jobRepository = jobRepository;
         this.encoder = encoder;
@@ -61,47 +57,6 @@ public class RegistService extends ResponseStatus {
         User user = userRepository.findByUsername(username);
         user.setPassword(encoder.encode(pass));
         return userRepository.save(user);
-    }
-
-    public ResponseMessage<RegisterBrandRequest> registBrand(RegisterBrandRequest request) {
-        long temp = brandRepository.findEmail(request.getEmail());
-        if (temp >= 1) {
-            return new ResponseMessage<>("Error -  Email Already Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
-        }
-        long tempUser = userBrandRepository.countByUsername(request.getUsername());
-        if (tempUser >= 1) {
-            return new ResponseMessage<>("Error -  Username Already Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
-        }
-        Brand brand = new Brand();
-        brand.setId(request.getId());
-        brand.setFullname(request.getFullname());
-        brand.setEmail(request.getEmail());
-        Job job = jobRepository.findByIdJob("B");
-        brand.setBrandjob(job);
-
-        UserBrand userBrand = new UserBrand();
-        userBrand.setBrand(brand);
-        userBrand.setId(request.getId());
-        userBrand.setUsername(request.getUsername());
-        int length = 10;
-        boolean useLetters = true;
-        boolean useNumbers = true;
-        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
-
-        System.out.println("Hasil Generate : " + generatedString);
-        userBrand.setPassword(encoder.encode(generatedString));
-        Set<Role> temp_role = roleRepository.findByName("Brand");
-        userBrand.setRoles(temp_role);
-        brand.setUserBrand(userBrand);
-        BrandFilePath brandFilePath = new BrandFilePath();
-        brandFilePath.setId(request.getId());
-        brandFilePath.setProfile("/images/brandProfile/blankProfile.png");
-        brandFilePath.setBrand(brand);
-        emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
-        brandRepository.save(brand);
-        userBrandRepository.save(userBrand);
-        brandFilePathRepository.save(brandFilePath);
-        return new ResponseMessage<>("Brand Registered", new RegisterBrandRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
     }
 
     public ResponseMessage<RegisterAdminRequest> registAdmin(RegisterAdminRequest request) {
@@ -159,6 +114,12 @@ public class RegistService extends ResponseStatus {
         Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
         influencer.setInfluenceTypes(temp_type);
         influencer.setJob(job);
+        influencer.setProvince(request.getProvince());
+        influencer.setDetailAddress(request.getDetailAddress());
+        influencer.setTiktok(request.getTiktok());
+        influencer.setInstagram(request.getInstagram());
+        influencer.setYoutube(request.getYoutube());
+        influencer.setFacebook(request.getFacebook());
 
         User user = new User();
         user.setInfluencer(influencer);
@@ -205,30 +166,6 @@ public class RegistService extends ResponseStatus {
         Set<Role> temp_role = roleRepository.findByName("Influencer");
         user.setRoles(temp_role);
         userRepository.save(user);
-        emailService.forgotEmail(request.getEmail(), temp_user.getUsername(), generatedString);
-        return new ForgotPasswordRequest(request.getEmail());
-    }
-
-    public ForgotPasswordRequest forgotBrand(ForgotPasswordRequest request){
-        Long temp = brandRepository.findIdByEmail(request.getEmail());
-        if (temp == null) {
-            throw dataNotFound();
-        }
-        UserBrand temp_user = userBrandRepository.findUsernameById(temp);
-        System.out.println(temp_user);
-        UserBrand user = new UserBrand();
-        user.setId(temp);
-        user.setUsername(temp_user.getUsername());
-        int length = 10;
-        boolean useLetters = true;
-        boolean useNumbers = true;
-        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
-
-        System.out.println("Hasil Generate : " + generatedString);
-        user.setPassword(encoder.encode(generatedString));
-        Set<Role> temp_role = roleRepository.findByName("Brand");
-        user.setRoles(temp_role);
-        userBrandRepository.save(user);
         emailService.forgotEmail(request.getEmail(), temp_user.getUsername(), generatedString);
         return new ForgotPasswordRequest(request.getEmail());
     }

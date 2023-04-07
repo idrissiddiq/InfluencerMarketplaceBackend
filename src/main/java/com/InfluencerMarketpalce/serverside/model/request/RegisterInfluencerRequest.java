@@ -5,6 +5,7 @@
  */
 package com.InfluencerMarketpalce.serverside.model.request;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 
 /**
@@ -13,17 +14,20 @@ import java.time.LocalDate;
  */
 public class RegisterInfluencerRequest {
     private Long id;
-
     private String fullname;
-
     private String email;
     private String city;
     private LocalDate birthDate;
     private String influenceType;
     private String username;
+    private String province;
+    private String detailAddress;
+    private String instagram;
+    private String youtube;
+    private String tiktok;
+    private String facebook;
 
-
-    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String influenceType, String username) {
+    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String influenceType, String username, String province, String detailAddress, String instagram, String youtube, String tiktok, String facebook) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -31,6 +35,12 @@ public class RegisterInfluencerRequest {
         this.birthDate = birthDate;
         this.influenceType = influenceType;
         this.username = username;
+        this.province = province;
+        this.detailAddress = detailAddress;
+        this.instagram = instagram;
+        this.youtube = youtube;
+        this.tiktok = tiktok;
+        this.facebook = facebook;
     }
 
     public Long getId() {
@@ -89,4 +99,51 @@ public class RegisterInfluencerRequest {
         this.username = username;
     }
 
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public String getTiktok() {
+        return tiktok;
+    }
+
+    public void setTiktok(String tiktok) {
+        this.tiktok = tiktok;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
 }

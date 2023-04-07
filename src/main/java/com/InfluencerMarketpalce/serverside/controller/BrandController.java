@@ -23,23 +23,5 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping("/profile")
-    public ResponseData<Brand> profile() {
-        return new ResponseData(brandService.profile());
-    }
 
-    @PutMapping("/profile")
-    public ResponseMessage editProfile(@RequestBody EditProfileBrand request){
-        return brandService.editProfile(request);
-    }
-
-    @GetMapping("/profile/photo")
-    public ResponseMessage getMyProfilePhotoPath(){
-        return brandService.getMyProfilePhotoPath();
-    }
-
-    @PutMapping("/profile/photo")
-    public ResponseMessage editProfilePhoto(@RequestBody ChangeProfilePhotoRequest request){
-        return brandService.editProfilePoto(request);
-    }
 }

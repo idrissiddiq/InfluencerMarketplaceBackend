@@ -4,14 +4,13 @@ import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Influencer;
 import com.InfluencerMarketpalce.serverside.model.request.CreateCampaignRequest;
 import com.InfluencerMarketpalce.serverside.model.request.UpdateCampaignRequest;
-import com.InfluencerMarketpalce.serverside.model.response.FindAllOpenCampaignResponse;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseData;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseListData;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
+import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/campaign")
@@ -27,11 +26,6 @@ public class CampaignController {
     @GetMapping
     public ResponseListData<Campaign> findAll() {
         return new ResponseListData(campaignService.findAll());
-    }
-
-    @GetMapping("/me")
-    public ResponseListData<Campaign> findAllByBrand() {
-        return new ResponseListData(campaignService.findAllByBrand());
     }
 
     @GetMapping("/search/{id}")
@@ -50,18 +44,23 @@ public class CampaignController {
         return new ResponseListData(campaignService.findAllOpenCampaign());
     }
 
-    @GetMapping("/me/{id}")
-    public ResponseListData<Campaign> findAllByBrandStatus(@PathVariable Long id) {
-        return new ResponseListData(campaignService.findAllByBrandStatus(id));
+    @GetMapping("/table")
+    public ResponseListData<FindAllOpenCampaignTableResponse> findAllOpenCampaignTable() {
+        return new ResponseListData(campaignService.findAllOpenCampaignTable());
     }
 
+//    @GetMapping("/me/{id}")
+//    public ResponseListData<Campaign> findAllByBrandStatus(@PathVariable Long id) {
+//        return new ResponseListData(campaignService.findAllByBrandStatus(id));
+//    }
+//
     @PostMapping("/create")
-    public ResponseMessage<CreateCampaignRequest> createCampaign(@RequestBody CreateCampaignRequest request) {
-        return campaignService.createCampaign(request);
+    public ResponsePostMessage createCampaign(@RequestBody Map<String, Object> param) {
+        return campaignService.createCampaign(param);
     }
-
-    @PutMapping("/me/{id}")
-    public ResponseMessage updateCampaign(@RequestBody UpdateCampaignRequest request, @PathVariable Long id){
-        return campaignService.updateCampaign(request, id);
-    }
+//
+//    @PutMapping("/me/{id}")
+//    public ResponseMessage updateCampaign(@RequestBody UpdateCampaignRequest request, @PathVariable Long id){
+//        return campaignService.updateCampaign(request, id);
+//    }
 }

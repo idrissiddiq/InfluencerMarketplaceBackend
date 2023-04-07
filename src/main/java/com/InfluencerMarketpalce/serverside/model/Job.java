@@ -33,10 +33,6 @@ public class Job {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Influencer> influencers;
 
-    @OneToMany(mappedBy = "Brandjob", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Brand> brands;
-
 }
 
 //done

@@ -22,11 +22,6 @@ public class ContractController {
         return new ResponseListData(contractService.findAllMyContract());
     }
 
-    @GetMapping("/{id}")
-    public ResponseListData<Contract> findAllMyContractFromCampaign(@PathVariable Long id) {
-        return new ResponseListData(contractService.findAllMyContractFromCampaign(id));
-    }
-
     @GetMapping("/me")
     public ResponseListData<Contract> findAllMyContractFromInfluencer() {
         return new ResponseListData(contractService.findAllMyContractFromInfluencer());
@@ -35,11 +30,6 @@ public class ContractController {
     @PostMapping("/{id}")
     public String createContract(@PathVariable Long id) {
         return contractService.createContract(id);
-    }
-
-    @PutMapping("/{id}")
-    public String approveContract(@RequestBody ApproveContractRequest request, @PathVariable Long id){
-        return contractService.approveContract(request, id);
     }
 
     @PutMapping("/admin/{id}")

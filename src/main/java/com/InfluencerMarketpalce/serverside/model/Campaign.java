@@ -24,6 +24,15 @@ public class Campaign {
     @Column(name = "budget")
     private Long budget;
 
+    @Column(name = "quota")
+    private Long quota;
+
+    @Column(name = "dos")
+    private String dos;
+
+    @Column(name = "dont")
+    private String dont;
+
     @ManyToOne
     @JoinColumn(name = "campaign_status_id")
     private CampaignStatus campaignStatus;
@@ -43,7 +52,7 @@ public class Campaign {
 
     }
 
-    public Campaign(Long id, String title, String description, Long budget, CampaignStatus campaignStatus, Brand brand, Set<Influencer> influencers, Set<Contract> contracts) {
+    public Campaign(Long id, String title, String description, Long budget, CampaignStatus campaignStatus, Brand brand, Set<Influencer> influencers, Set<Contract> contracts, String dos, String dont, Long quota) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -52,6 +61,9 @@ public class Campaign {
         this.brand = brand;
         this.influencers = influencers;
         this.contracts = contracts;
+        this.dont = dont;
+        this.dos = dos;
+        this.quota = quota;
     }
 
     public Long getId() {
@@ -116,5 +128,29 @@ public class Campaign {
 
     public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public Long getQuota() {
+        return quota;
+    }
+
+    public void setQuota(Long quota) {
+        this.quota = quota;
+    }
+
+    public String getDos() {
+        return dos;
+    }
+
+    public void setDos(String dos) {
+        this.dos = dos;
+    }
+
+    public String getDont() {
+        return dont;
+    }
+
+    public void setDont(String dont) {
+        this.dont = dont;
     }
 }

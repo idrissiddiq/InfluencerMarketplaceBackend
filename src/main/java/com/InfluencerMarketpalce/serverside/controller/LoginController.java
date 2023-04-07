@@ -36,12 +36,6 @@ public class LoginController {
         return new ResponseEntity(loginService.login(loginRequest), HttpStatus.OK);
     }
 
-    @PostMapping("/brand")
-    public ResponseEntity<LoginResponseDto> loginBrand(@RequestBody LoginRequestDto loginRequest){
-        System.out.println(loginRequest.getUsername());
-        return new ResponseEntity(loginService.loginBrand(loginRequest), HttpStatus.OK);
-    }
-
     @PostMapping("/admin")
     public ResponseEntity<LoginResponseDto> loginAdmin(@RequestBody LoginRequestDto loginRequest){
         System.out.println(loginRequest.getUsername());

@@ -20,18 +20,16 @@ public class ContractService extends ResponseStatus  {
     private ContractFilePathRepository contractFilePathRepository;
     private CampaignRepository campaignRepository;
     private UserRepository userRepository;
-    private UserBrandRepository userBrandRepository;
     private UserAdminRepository userAdminRepository;
     private InfluencerRepository influencerRepository;
 
     @Autowired
-    public ContractService(ContractRepository contractRepository, ContractStatusRepository contractStatusRepository, ContractFilePathRepository contractFilePathRepository, CampaignRepository campaignRepository, UserRepository userRepository, UserBrandRepository userBrandRepository, UserAdminRepository userAdminRepository, InfluencerRepository influencerRepository) {
+    public ContractService(ContractRepository contractRepository, ContractStatusRepository contractStatusRepository, ContractFilePathRepository contractFilePathRepository, CampaignRepository campaignRepository, UserRepository userRepository, UserAdminRepository userAdminRepository, InfluencerRepository influencerRepository) {
         this.contractRepository = contractRepository;
         this.contractStatusRepository = contractStatusRepository;
         this.contractFilePathRepository = contractFilePathRepository;
         this.campaignRepository = campaignRepository;
         this.userRepository = userRepository;
-        this.userBrandRepository = userBrandRepository;
         this.userAdminRepository = userAdminRepository;
         this.influencerRepository = influencerRepository;
     }
@@ -42,25 +40,11 @@ public class ContractService extends ResponseStatus  {
         return contractRepository.findAllByInfluencer(user.getId());
     }
 
-    public List<Contract> findAllMyContractFromCampaign(long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        UserBrand userBrand = userBrandRepository.findByUsername(name);
-        return contractRepository.findAllByBrandCampaign(userBrand.getId(), id);
-    }
-
     public List<Contract> findAllMyContractFromInfluencer(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         User user = userRepository.findByUsername(name);
         return contractRepository.findAllByInfluencer(user.getId());
-    }
-
-    public List<Contract> findAllMyContractFromCampaignAndStatus(long campaignId, long statusId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        UserBrand userBrand = userBrandRepository.findByUsername(name);
-        return contractRepository.findAllByBrandCampaignStatus(userBrand.getId(), campaignId, statusId);
     }
 
     public String createContract(Long id){
@@ -75,6 +59,9 @@ public class ContractService extends ResponseStatus  {
         if (campaign.getCampaignStatus().getId() != 1){
             return "Campaign Closed";
         }
+        if(contractRepository.countByInfluencerCampaign(user.getId(), id)>=1){
+            return "User Already Participate in This Campaign";
+        }
         Brand brand = campaign.getBrand();
         ContractStatus contractStatus = contractStatusRepository.getById(1L);
         Contract contract = new Contract();
@@ -85,39 +72,6 @@ public class ContractService extends ResponseStatus  {
         contract.setCampaign(campaign);
         contractRepository.save(contract);
         return "Create Contract Success";
-    }
-
-    public String approveContract(ApproveContractRequest request, Long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
-        String name = authentication.getName();
-        UserBrand userBrand = userBrandRepository.findByUsername(name);
-        Optional<Contract> check = contractRepository.findAllByBrand(userBrand.getId(), id);
-        if (!check.isPresent()) {
-            throw dataNotFound();
-        }
-        Contract temp = contractRepository.findByBrand(userBrand.getId(), id);
-        if (temp.getContractStatus().getId() != 1){
-            return "Contract has already approved";
-        }
-        LocalDate date = LocalDate.now();
-        ContractFilePath contractFilePath = new ContractFilePath();
-        contractFilePath.setId(id);
-        contractFilePath.setFilePath("/images/contract/brandNote/" + date.toString() + temp.getCampaign().getId() + temp.getInfluencer().getFullname()+".png");
-        contractFilePath.setDescription("Notes From Brand");
-        Contract contract = new Contract();
-        contract.setId(id);
-        contract.setStartDate(date.toString());
-        contract.setEndDate(request.getDeadline());
-        contract.setBrand(temp.getBrand());
-        contract.setBudget(temp.getBudget());
-        contract.setCampaign(temp.getCampaign());
-        contract.setInfluencer(temp.getInfluencer());
-        ContractStatus contractStatus = contractStatusRepository.getById(2L);
-        contract.setContractStatus(contractStatus);
-        contractFilePath.setContract(contract);
-        contractFilePathRepository.save(contractFilePath);
-        contractRepository.save(contract);
-        return "Contract Approved";
     }
 
     public String approveContractByAdmin(Long id){

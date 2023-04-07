@@ -5,6 +5,8 @@
  */
 package com.InfluencerMarketpalce.serverside.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
+
+    private Logger logger= LoggerFactory.getLogger(EmailService.class);
     
     public void sendEmail(String toEmail, String username, String password){
         String url = "http://localhost:8082/api/register/setPassword/" + username;
@@ -25,22 +29,24 @@ public class EmailService {
                 + "This is your username and password"
                 + " : "
                 + "\nUsername : " + username
-                + "\nPassword : " + password;
-        String subject = "Your account is registered!";
+                + "\nPassword : " + password
+                + "\n\nPlease do not reply this email"
+                + "\n\nWith Love,"
+                + "\nStraw Team";
+        String subject = "[Do Not Reply]Your account is registered!";
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("muhammadidrissiddiq@gmail.com");
+        message.setFrom("info@straw.com");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
         
         mailSender.send(message);
-        
-        System.out.println("Berhasil kirim email..");
+        logger.info("Berhasil kirim email registrasi..");
     }
     
     public void forgotEmail(String toEmail, String username, String password){
         String url = "http://localhost:8082/api/register/setPassword/" + username;
-        String body = "This is ypur new account! \n"
+        String body = "This is your new account! \n"
                 + "Be kindly to remember your username and password"
                 + "\nUsername : " + username
                 + "\nPassword : " + password;
@@ -52,7 +58,7 @@ public class EmailService {
         message.setSubject(subject);
         
         mailSender.send(message);
-        
-        System.out.println("Berhasil kirim email..");
+
+        logger.info("Berhasil kirim email lupa password..");
     }
 }

@@ -1,0 +1,17 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¿„ô€ıÿÿÿÿ
+A
+java:S1948"&Make "user" transient or serializable.(’Ø¾ıÿÿÿÿ
+E
+java:S1611"/Remove the parentheses around the "x" parameter(ˆ±¨­
+B
+java:S1602",Remove useless curly braces around statement(ˆ±¨­
+E
+java:S1611#"/Remove the parentheses around the "x" parameter(ˆ±¨­
+B
+java:S1602#",Remove useless curly braces around statement(ˆ±¨­
+E
+java:S1611$"/Remove the parentheses around the "y" parameter(ŠŠ„©
+B
+java:S1602$",Remove useless curly braces around statement(ŠŠ„©
+N	java:S106)"9Replace this use of System.out or System.err by a logger.(‚İ×ç

@@ -1,11 +1,8 @@
 package com.InfluencerMarketpalce.serverside.service;
 
 import com.InfluencerMarketpalce.serverside.model.AppUserAdminDetail;
-import com.InfluencerMarketpalce.serverside.model.AppUserBrandDetail;
 import com.InfluencerMarketpalce.serverside.model.UserAdmin;
-import com.InfluencerMarketpalce.serverside.model.UserBrand;
 import com.InfluencerMarketpalce.serverside.repository.UserAdminRepository;
-import com.InfluencerMarketpalce.serverside.repository.UserBrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

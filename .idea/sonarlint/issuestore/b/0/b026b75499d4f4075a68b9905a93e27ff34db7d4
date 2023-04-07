@@ -1,12 +1,0 @@
-
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‚Ò¿œ
-f
-java:S1128"PRemove this unused import 'com.InfluencerMarketpalce.serverside.model.Campaign'.(šŸš‡
-h
-java:S1128"RRemove this unused import 'com.InfluencerMarketpalce.serverside.model.Influencer'.(É’Ä
-b
-java:S1128"LRemove this unused import 'com.InfluencerMarketpalce.serverside.model.Role'.(ïŸªˆ
-F
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
-E
-java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ

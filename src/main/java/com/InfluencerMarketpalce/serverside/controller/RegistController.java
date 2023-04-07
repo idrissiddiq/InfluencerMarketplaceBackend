@@ -36,11 +36,6 @@ public class RegistController {
         return registService.regist(user);
     }
 
-    @PostMapping("/brand")
-    public ResponseMessage<RegisterBrandRequest> registerBrand(@RequestBody RegisterBrandRequest userBrand) {
-        return registService.registBrand(userBrand);
-    }
-
     @PostMapping("/admin")
     public ResponseMessage<RegisterAdminRequest> registerAdmin(@RequestBody RegisterAdminRequest request) {
         return registService.registAdmin(request);
@@ -50,12 +45,6 @@ public class RegistController {
     public ResponseMessage<ForgotPasswordRequest> forgot(@RequestBody ForgotPasswordRequest email) {
         System.out.println("Lupa woyy");
         return new ResponseMessage("Password Updated!", registService.forgot(email));
-    }
-
-    @PutMapping("/brand/forgot")
-    public ResponseMessage<ForgotPasswordRequest> forgotBrand(@RequestBody ForgotPasswordRequest email) {
-        System.out.println("Lupa woyy");
-        return new ResponseMessage("Password Updated!", registService.forgotBrand(email));
     }
 
     @PutMapping("/influencer/change")
