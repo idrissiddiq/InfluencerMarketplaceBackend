@@ -22,9 +22,10 @@ public class ContractService extends ResponseStatus  {
     private UserRepository userRepository;
     private UserAdminRepository userAdminRepository;
     private InfluencerRepository influencerRepository;
+    private NotificationRepository notificationRepository;
 
     @Autowired
-    public ContractService(ContractRepository contractRepository, ContractStatusRepository contractStatusRepository, ContractFilePathRepository contractFilePathRepository, CampaignRepository campaignRepository, UserRepository userRepository, UserAdminRepository userAdminRepository, InfluencerRepository influencerRepository) {
+    public ContractService(ContractRepository contractRepository, ContractStatusRepository contractStatusRepository, ContractFilePathRepository contractFilePathRepository, CampaignRepository campaignRepository, UserRepository userRepository, UserAdminRepository userAdminRepository, InfluencerRepository influencerRepository, NotificationRepository notificationRepository) {
         this.contractRepository = contractRepository;
         this.contractStatusRepository = contractStatusRepository;
         this.contractFilePathRepository = contractFilePathRepository;
@@ -32,6 +33,7 @@ public class ContractService extends ResponseStatus  {
         this.userRepository = userRepository;
         this.userAdminRepository = userAdminRepository;
         this.influencerRepository = influencerRepository;
+        this.notificationRepository = notificationRepository;
     }
     public List<Contract> findAllMyContract() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -81,11 +83,16 @@ public class ContractService extends ResponseStatus  {
         if (userAdmin.getUsername().isEmpty()) {
             return "You have no right to do this action";
         }
-        Contract temp = contractRepository.findContractById(id);
-        if (temp.getContractStatus().getId() != 2){
-            return "Contract has already approved";
+        Optional<Contract> check = contractRepository.checkContractById(id);
+        if(!check.isPresent()){
+            return "Contract Does Not Exist";
         }
-        LocalDate date = LocalDate.now();
+        Contract temp = contractRepository.findContractById(id);
+        if (temp.getContractStatus().getId() != 1){
+            return "Contract has already approved";
+        } else if (temp.getCampaign().getQuota() <= temp.getCampaign().getFilled()){
+            return "Campaign's Quota is Full";
+        }
         Contract contract = new Contract();
         contract.setId(id);
         contract.setStartDate(temp.getStartDate());
@@ -94,9 +101,29 @@ public class ContractService extends ResponseStatus  {
         contract.setBudget(temp.getBudget());
         contract.setCampaign(temp.getCampaign());
         contract.setInfluencer(temp.getInfluencer());
-        ContractStatus contractStatus = contractStatusRepository.getById(3L);
+        ContractStatus contractStatus = contractStatusRepository.getById(2L);
         contract.setContractStatus(contractStatus);
+        Campaign campaign = new Campaign();
+        campaign.setId(temp.getCampaign().getId());
+        campaign.setTitle(temp.getCampaign().getTitle());
+        campaign.setDescription(temp.getCampaign().getDescription());
+        campaign.setBrand(temp.getBrand());
+        campaign.setCampaignStatus(temp.getCampaign().getCampaignStatus());
+        campaign.setBudget(temp.getBudget());
+        campaign.setDos(temp.getCampaign().getDos());
+        campaign.setDont(temp.getCampaign().getDont());
+        campaign.setQuota(temp.getCampaign().getQuota());
+        campaign.setFilled(temp.getCampaign().getFilled() + 1);
+        Notification notification = new Notification();
+        notification.setMessage("Your Submission on " + temp.getCampaign().getTitle() + " is already approved by admin." +
+                " You can start your collabaoration with " + temp.getCampaign().getBrand().getCompanyName() + ". Make sure " +
+                "to submit in time.");
+        notification.setStatus("U");
+        notification.setCreateDate(LocalDate.now().toString());
+        notification.setInfluencer(temp.getInfluencer());
         contractRepository.save(contract);
+        campaignRepository.save(campaign);
+        notificationRepository.save(notification);
         return "Contract Approved";
     }
 

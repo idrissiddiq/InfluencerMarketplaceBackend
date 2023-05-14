@@ -18,7 +18,6 @@ public class RegisterInfluencerRequest {
     private String email;
     private String city;
     private LocalDate birthDate;
-    private String influenceType;
     private String username;
     private String province;
     private String detailAddress;
@@ -27,13 +26,12 @@ public class RegisterInfluencerRequest {
     private String tiktok;
     private String facebook;
 
-    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String influenceType, String username, String province, String detailAddress, String instagram, String youtube, String tiktok, String facebook) {
+    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String username, String province, String detailAddress, String instagram, String youtube, String tiktok, String facebook) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
         this.city = city;
         this.birthDate = birthDate;
-        this.influenceType = influenceType;
         this.username = username;
         this.province = province;
         this.detailAddress = detailAddress;
@@ -81,14 +79,6 @@ public class RegisterInfluencerRequest {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public String getInfluenceType() {
-        return influenceType;
-    }
-
-    public void setInfluenceType(String influenceType) {
-        this.influenceType = influenceType;
     }
 
     public String getUsername() {

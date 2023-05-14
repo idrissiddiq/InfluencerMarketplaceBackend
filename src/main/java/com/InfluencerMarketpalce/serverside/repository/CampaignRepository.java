@@ -28,7 +28,7 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
     @Query(value = "SELECT tb_campaign.campaign_id as \\\"id\\\", tb_campaign.title as \\\"title\\\", tb_campaign.description as \\\"description\\\", tb_brand.company_name as \\\"company\\\", tb_campaign.budget as \\\"budget\\\" FROM tb_campaign INNER JOIN tb_brand ON tb_campaign.brand_id=tb_brand.brand_id where tb_campaign.CAMPAIGN_STATUS_ID = 1 LIMIT 100", nativeQuery = true)
     List<FindAllOpenCampaignResponse> findAllCampaignOpen();
 
-    @Query(value = "SELECT tb_campaign.campaign_id as \\\"id\\\", tb_campaign.title as \\\"title\\\", tb_campaign.description as \\\"description\\\", tb_brand.company_name as \\\"company\\\", tb_campaign.budget as \\\"budget\\\", tb_campaign.quota as \\\"quota\\\", tb_campaign.dos as \\\"dos\\\", tb_campaign.dont as \\\"dont\\\" FROM tb_campaign INNER JOIN tb_brand ON tb_campaign.brand_id=tb_brand.brand_id where tb_campaign.CAMPAIGN_STATUS_ID = 1", nativeQuery = true)
+    @Query(value = "SELECT tb_campaign.campaign_id as \\\"id\\\", tb_campaign.title as \\\"title\\\", tb_campaign.description as \\\"description\\\", tb_brand.company_name as \\\"company\\\", tb_campaign.budget as \\\"budget\\\", tb_campaign.quota as \\\"quota\\\", tb_campaign.dos as \\\"dos\\\", tb_campaign.dont as \\\"dont\\\", tb_campaign.filled as \\\"filled\\\" FROM tb_campaign INNER JOIN tb_brand ON tb_campaign.brand_id=tb_brand.brand_id where tb_campaign.CAMPAIGN_STATUS_ID = 1", nativeQuery = true)
     List<FindAllOpenCampaignTableResponse> findFullAllCampaignOpen();
 
 }

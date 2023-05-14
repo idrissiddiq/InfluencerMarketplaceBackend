@@ -10,5 +10,6 @@ public interface FindAllOpenCampaignTableResponse{
     String getDos();
     String getDont();
     Long getQuota();
+    Long getFilled();
 }
 

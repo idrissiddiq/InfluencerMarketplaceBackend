@@ -24,6 +24,10 @@ public class Brand {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Contract> contracts;
 
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Report> reports;
+
     public Brand(){
 
     }

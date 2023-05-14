@@ -95,6 +95,14 @@ public class Influencer {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Contract> contracts;
 
+    @OneToMany(mappedBy = "influencer", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Report> reports;
+
+    @OneToMany(mappedBy = "influencer", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Notification> notifications;
+
 
     public Influencer() {
     }

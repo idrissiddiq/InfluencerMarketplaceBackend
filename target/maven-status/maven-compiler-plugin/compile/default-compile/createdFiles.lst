@@ -15,6 +15,7 @@ com\InfluencerMarketpalce\serverside\model\request\RegisterInfluencerRequest.cla
 com\InfluencerMarketpalce\serverside\service\JobService.class
 com\InfluencerMarketpalce\serverside\controller\LoginController.class
 com\InfluencerMarketpalce\serverside\model\BrandFilePath.class
+com\InfluencerMarketpalce\serverside\repository\NotificationRepository.class
 com\InfluencerMarketpalce\serverside\model\response\CalculateAgeReponse.class
 com\InfluencerMarketpalce\serverside\service\MyUserDetailService.class
 com\InfluencerMarketpalce\serverside\controller\InfluencerController.class
@@ -26,6 +27,7 @@ com\InfluencerMarketpalce\serverside\model\response\IndonesiaLocationResponse.cl
 com\InfluencerMarketpalce\serverside\controller\TiktokController.class
 com\InfluencerMarketpalce\serverside\model\User$UserBuilder.class
 com\InfluencerMarketpalce\serverside\model\response\TiktokGetVideoInfoReponse.class
+com\InfluencerMarketpalce\serverside\service\ReportService.class
 com\InfluencerMarketpalce\serverside\repository\InfluenceTypeRepository.class
 com\InfluencerMarketpalce\serverside\model\ContractStatus.class
 com\InfluencerMarketpalce\serverside\model\InfluencerType.class
@@ -45,6 +47,7 @@ com\InfluencerMarketpalce\serverside\repository\InfluencerFilePathRepository.cla
 com\InfluencerMarketpalce\serverside\model\AppUserDetail.class
 com\InfluencerMarketpalce\serverside\service\CampaignStatusService.class
 com\InfluencerMarketpalce\serverside\model\response\FindAllOpenCampaignResponse.class
+com\InfluencerMarketpalce\serverside\controller\NotificationController.class
 com\InfluencerMarketpalce\serverside\model\AppUserAdminDetail.class
 com\InfluencerMarketpalce\serverside\service\AppUserAdminDetailService.class
 com\InfluencerMarketpalce\serverside\model\MyUserAdminDetail.class
@@ -72,10 +75,13 @@ com\InfluencerMarketpalce\serverside\model\response\GetProfilePhotoByIdResponse.
 com\InfluencerMarketpalce\serverside\service\LoginService.class
 com\InfluencerMarketpalce\serverside\controller\RegistController.class
 com\InfluencerMarketpalce\serverside\model\request\ApproveContractRequest.class
+com\InfluencerMarketpalce\serverside\repository\ReportRepository.class
 com\InfluencerMarketpalce\serverside\model\Job$JobBuilder.class
 com\InfluencerMarketpalce\serverside\repository\ContractFilePathRepository.class
 com\InfluencerMarketpalce\serverside\model\Job.class
+com\InfluencerMarketpalce\serverside\model\Notification.class
 com\InfluencerMarketpalce\serverside\model\Contract.class
+com\InfluencerMarketpalce\serverside\model\Parameter.class
 com\InfluencerMarketpalce\serverside\model\request\CreateCampaignRequest.class
 com\InfluencerMarketpalce\serverside\model\InfluencerFilePath.class
 com\InfluencerMarketpalce\serverside\model\request\UpdateCampaignRequest.class
@@ -86,6 +92,7 @@ com\InfluencerMarketpalce\serverside\model\response\ResponsePostMessage$Response
 com\InfluencerMarketpalce\serverside\service\RegistService.class
 com\InfluencerMarketpalce\serverside\model\request\ChangeProfilePhotoRequest.class
 com\InfluencerMarketpalce\serverside\model\response\ProfileDTO.class
+com\InfluencerMarketpalce\serverside\model\Report.class
 com\InfluencerMarketpalce\serverside\controller\CampaignController.class
 com\InfluencerMarketpalce\serverside\model\response\ResponseData.class
 com\InfluencerMarketpalce\serverside\repository\UserAdminRepository.class
@@ -97,5 +104,7 @@ com\InfluencerMarketpalce\serverside\model\response\IndonesiaLocationResponse$In
 com\InfluencerMarketpalce\serverside\controller\JobController.class
 com\InfluencerMarketpalce\serverside\service\MyUserAdminDetailService.class
 com\InfluencerMarketpalce\serverside\service\InfluencerTypeService.class
+com\InfluencerMarketpalce\serverside\controller\ReportController.class
 com\InfluencerMarketpalce\serverside\model\Brand.class
+com\InfluencerMarketpalce\serverside\service\NotificationService.class
 com\InfluencerMarketpalce\serverside\model\response\ResponsePostMessage.class

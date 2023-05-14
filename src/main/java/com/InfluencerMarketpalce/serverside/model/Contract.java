@@ -45,6 +45,10 @@ public class Contract {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ContractFilePath> contractFilePaths;
 
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Report> reports;
+
     public Contract(){
 
     }

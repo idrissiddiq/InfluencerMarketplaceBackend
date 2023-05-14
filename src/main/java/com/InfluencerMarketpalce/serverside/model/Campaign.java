@@ -33,6 +33,9 @@ public class Campaign {
     @Column(name = "dont")
     private String dont;
 
+    @Column(name = "filled")
+    private Long filled;
+
     @ManyToOne
     @JoinColumn(name = "campaign_status_id")
     private CampaignStatus campaignStatus;
@@ -48,11 +51,15 @@ public class Campaign {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Contract> contracts;
 
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<Report> reports;
+
     public Campaign(){
 
     }
 
-    public Campaign(Long id, String title, String description, Long budget, CampaignStatus campaignStatus, Brand brand, Set<Influencer> influencers, Set<Contract> contracts, String dos, String dont, Long quota) {
+    public Campaign(Long id, String title, String description, Long budget, CampaignStatus campaignStatus, Brand brand, Set<Influencer> influencers, Set<Contract> contracts, String dos, String dont, Long quota, Long filled) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -64,6 +71,7 @@ public class Campaign {
         this.dont = dont;
         this.dos = dos;
         this.quota = quota;
+        this.filled = filled;
     }
 
     public Long getId() {
@@ -152,5 +160,13 @@ public class Campaign {
 
     public void setDont(String dont) {
         this.dont = dont;
+    }
+
+    public Long getFilled() {
+        return filled;
+    }
+
+    public void setFilled(Long filled) {
+        this.filled = filled;
     }
 }

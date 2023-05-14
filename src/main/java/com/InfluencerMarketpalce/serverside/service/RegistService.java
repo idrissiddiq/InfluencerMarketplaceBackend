@@ -13,6 +13,7 @@ import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
 
 import java.util.Set;
 import org.apache.commons.lang.RandomStringUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,10 +37,11 @@ public class RegistService extends ResponseStatus {
     private InfluenceTypeRepository influenceTypeRepository;
     private InfluencerFilePathRepository influencerFilePathRepository;
     private BrandFilePathRepository brandFilePathRepository;
+    private IndonesiaLocationService indonesiaLocationService;
     
     
     @Autowired
-    public RegistService(InfluencerRepository influencerRepository, AdminRepository adminRepository,UserRepository userRepository, UserAdminRepository userAdminRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository) {
+    public RegistService(InfluencerRepository influencerRepository, AdminRepository adminRepository,UserRepository userRepository, UserAdminRepository userAdminRepository, JobRepository jobRepository, PasswordEncoder encoder, RoleRepository roleRepository, EmailService emailService, InfluenceTypeRepository influenceTypeRepository, InfluencerFilePathRepository influencerFilePathRepository, BrandFilePathRepository brandFilePathRepository, IndonesiaLocationService indonesiaLocationService) {
         this.influencerRepository = influencerRepository;
         this.adminRepository = adminRepository;
         this.userRepository = userRepository;
@@ -51,6 +53,7 @@ public class RegistService extends ResponseStatus {
         this.influenceTypeRepository = influenceTypeRepository;
         this.influencerFilePathRepository = influencerFilePathRepository;
         this.brandFilePathRepository = brandFilePathRepository;
+        this.indonesiaLocationService = indonesiaLocationService;
     }
     
     public User setPassword(String pass, String username){
@@ -89,7 +92,7 @@ public class RegistService extends ResponseStatus {
         Set<Role> temp_role = roleRepository.findByName("Admin");
         userAdmin.setRoles(temp_role);
         admin.setUserAdmin(userAdmin);
-        //emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
+        emailService.sendEmail(request.getEmail(), request.getUsername(), generatedString);
         adminRepository.save(admin);
         userAdminRepository.save(userAdmin);
         return new ResponseMessage<>("Admin Registered", new RegisterAdminRequest(request.getId(), request.getFullname(), request.getEmail(), request.getUsername()));
@@ -98,11 +101,13 @@ public class RegistService extends ResponseStatus {
     public ResponseMessage<RegisterInfluencerResponse> regist(RegisterInfluencerRequest request) {
         Job job = jobRepository.findByIdJob("I");
         long temp = influencerRepository.findEmail(request.getEmail());
-        if (temp >= 1) {
+        long tempAdmin = adminRepository.findEmail(request.getEmail());
+        if (temp >= 1 || tempAdmin >= 1) {
             return new ResponseMessage<>("Error -  Email Already Registered", new RegisterInfluencerResponse(request.getId(), request.getFullname(), request.getEmail(), job, request.getUsername(), "ungenerated"));
         }
         long tempUser = userRepository.countByUsername(request.getUsername());
-        if (tempUser >= 1) {
+        long tempUserAdmin = userAdminRepository.countByUsername(request.getUsername());
+        if (tempUser >= 1 || tempUserAdmin >= 1) {
             return new ResponseMessage<>("Error -  Username Already Registered", new RegisterInfluencerResponse(request.getId(), request.getFullname(), request.getEmail(), job, request.getUsername(), "ungenerated"));
         }
         Influencer influencer = new Influencer();
@@ -111,10 +116,12 @@ public class RegistService extends ResponseStatus {
         influencer.setEmail(request.getEmail());
         influencer.setBirthDate(request.getBirthDate());
         influencer.setCity(request.getCity());
-        Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
-        influencer.setInfluenceTypes(temp_type);
         influencer.setJob(job);
-        influencer.setProvince(request.getProvince());
+        ResponseData<IndonesiaLocationResponse> indonesiaLocationResponse = indonesiaLocationService.searchProvince(request.getProvince());
+        JSONObject data = new JSONObject(indonesiaLocationResponse);
+        String tempProvince = data.optString("data");
+        JSONObject jsonProv = new JSONObject(tempProvince);
+        influencer.setProvince(jsonProv.optString("name"));
         influencer.setDetailAddress(request.getDetailAddress());
         influencer.setTiktok(request.getTiktok());
         influencer.setInstagram(request.getInstagram());
@@ -165,8 +172,8 @@ public class RegistService extends ResponseStatus {
         user.setPassword(encoder.encode(generatedString));
         Set<Role> temp_role = roleRepository.findByName("Influencer");
         user.setRoles(temp_role);
-        userRepository.save(user);
         emailService.forgotEmail(request.getEmail(), temp_user.getUsername(), generatedString);
+        userRepository.save(user);
         return new ForgotPasswordRequest(request.getEmail());
     }
 

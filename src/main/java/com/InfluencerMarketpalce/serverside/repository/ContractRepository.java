@@ -2,6 +2,7 @@ package com.InfluencerMarketpalce.serverside.repository;
 
 import com.InfluencerMarketpalce.serverside.model.Campaign;
 import com.InfluencerMarketpalce.serverside.model.Contract;
+import com.InfluencerMarketpalce.serverside.model.Influencer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,9 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
 
     @Query(value = "SELECT * FROM tb_contract WHERE contract_id = ?1", nativeQuery = true)
     Contract findContractById(Long contractId);
+
+    @Query(value = "SELECT * FROM tb_contract WHERE contract_id = ?1", nativeQuery = true)
+    Optional<Contract> checkContractById(Long contractId);
 
     @Query(value = "SELECT * FROM tb_contract WHERE brand_id = ?1 AND campaign_id = ?2 ", nativeQuery = true)
     List<Contract> findAllByBrandCampaign(Long brandId, Long campaignId);

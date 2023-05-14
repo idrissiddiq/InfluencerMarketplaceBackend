@@ -73,6 +73,7 @@ public class CampaignService extends ResponseStatus {
         campaign.setCampaignStatus(campaignStatus);
         campaign.setBudget(Long.parseLong(param.get("budget").toString()));
         campaign.setQuota(Long.parseLong(param.get("quota").toString()));
+        campaign.setFilled(0L);
         campaign.setDos(param.get("dos").toString());
         campaign.setDont(param.get("dont").toString());
         campaignRepository.save(campaign);

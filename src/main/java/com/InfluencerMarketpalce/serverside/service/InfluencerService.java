@@ -8,14 +8,15 @@ package com.InfluencerMarketpalce.serverside.service;
 import com.InfluencerMarketpalce.serverside.model.*;
 import com.InfluencerMarketpalce.serverside.model.request.ChangeProfilePhotoRequest;
 import com.InfluencerMarketpalce.serverside.model.request.EditProfileInfluencer;
-import com.InfluencerMarketpalce.serverside.model.response.CalculateAgeReponse;
-import com.InfluencerMarketpalce.serverside.model.response.FindAllInfluencerResponse;
+import com.InfluencerMarketpalce.serverside.model.response.*;
 import com.InfluencerMarketpalce.serverside.repository.*;
 import com.InfluencerMarketpalce.serverside.service.response.ResponseStatus;
-import com.InfluencerMarketpalce.serverside.model.response.ResponseMessage;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,15 +36,17 @@ public class InfluencerService extends ResponseStatus {
     private UserRepository userRepository;
     private PasswordEncoder encoder;
     private InfluencerFilePathRepository influencerFilePathRepository;
+    private IndonesiaLocationService indonesiaLocationService;
 
     @Autowired
-    public InfluencerService(InfluencerRepository influencerRepository, JobRepository jobRepository, InfluenceTypeRepository influenceTypeRepository, UserRepository userRepository, PasswordEncoder encoder, InfluencerFilePathRepository influencerFilePathRepository) {
+    public InfluencerService(InfluencerRepository influencerRepository, JobRepository jobRepository, InfluenceTypeRepository influenceTypeRepository, UserRepository userRepository, PasswordEncoder encoder, InfluencerFilePathRepository influencerFilePathRepository, IndonesiaLocationService indonesiaLocationService) {
         this.influencerRepository = influencerRepository;
         this.jobRepository = jobRepository;
         this.influenceTypeRepository = influenceTypeRepository;
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.influencerFilePathRepository = influencerFilePathRepository;
+        this.indonesiaLocationService = indonesiaLocationService;
     }
 
     public Influencer profile() {
@@ -66,31 +69,38 @@ public class InfluencerService extends ResponseStatus {
         return data;
     }
 
-    public ResponseMessage editProfile(EditProfileInfluencer request){
+    public ResponseMessage editProfile(Map<String, Object> param){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
         String name = authentication.getName();
         User user = userRepository.findByUsername(name);
-        Optional<Influencer> temp = influencerRepository.findAllByEmail(request.getEmail());
+        Optional<Influencer> temp = influencerRepository.findAllByEmail(param.get("email").toString());
         if (temp.isPresent() && temp.get().getEmail() != user.getInfluencer().getEmail()) {
-            return new ResponseMessage<>("Error -  Email Already Registered", new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType()));
+            return new ResponseMessage<>("Error -  Email Already Registered", param);
         }
-//        Optional<User> tempUser = userRepository.findAllByUsername(request.getUsername());
-//        if (tempUser.isPresent() && tempUser.get().getUsername() != user.getUsername()) {
-//            return new ResponseMessage<>("Error -  Username Already Registered", new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType(), request.getUsername()));
-//        }
         Influencer influencer = new Influencer();
         influencer.setId(user.getId());
-        influencer.setFullname(request.getFullname());
-        influencer.setBirthDate(request.getBirthDate());
-        influencer.setCity(request.getCity());
-        influencer.setEmail(request.getEmail());
-        Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
-        influencer.setInfluenceTypes(temp_type);
+        influencer.setFullname(param.get("fullname").toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        influencer.setBirthDate(LocalDate.parse(param.get("birthDate").toString(), formatter));
+        influencer.setCity(param.get("city").toString());
+        influencer.setEmail(param.get("email").toString());
+        influencer.setDetailAddress(param.get("detailAddress").toString());
+        ResponseData<IndonesiaLocationResponse> indonesiaLocationResponse = indonesiaLocationService.searchProvince(param.get("province").toString());
+        JSONObject data = new JSONObject(indonesiaLocationResponse);
+        String tempProvince = data.optString("data");
+        JSONObject jsonProv = new JSONObject(tempProvince);
+        influencer.setProvince(jsonProv.optString("name"));
+        influencer.setFacebook(param.get("facebook").toString());
+        influencer.setYoutube(param.get("youtube").toString());
+        influencer.setInstagram(param.get("instagram").toString());
+        influencer.setTiktok(param.get("tiktok").toString());
+//        Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
+//        influencer.setInfluenceTypes(temp_type);
 //        influencer.setCampaigns(user.getInfluencer().getCampaigns());
         Job job = jobRepository.findByIdJob("I");
         influencer.setJob(job);
         influencerRepository.save(influencer);
-        return new ResponseMessage<>("Influencer Profile Updated",new EditProfileInfluencer(request.getFullname(), request.getEmail(), request.getCity(), request.getBirthDate(), request.getInfluenceType()));
+        return new ResponseMessage<>("Influencer Profile Updated", param);
     }
 
     public ResponseMessage editProfilePoto(ChangeProfilePhotoRequest request){
