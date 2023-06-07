@@ -19,14 +19,14 @@ public class RegisterInfluencerRequest {
     private String city;
     private LocalDate birthDate;
     private String username;
-    private String province;
+    private Long province;
     private String detailAddress;
     private String instagram;
     private String youtube;
     private String tiktok;
     private String facebook;
 
-    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String username, String province, String detailAddress, String instagram, String youtube, String tiktok, String facebook) {
+    public RegisterInfluencerRequest(Long id, String fullname, String email, String city, LocalDate birthDate, String username, Long province, String detailAddress, String instagram, String youtube, String tiktok, String facebook) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -89,11 +89,11 @@ public class RegisterInfluencerRequest {
         this.username = username;
     }
 
-    public String getProvince() {
+    public Long getProvince() {
         return province;
     }
 
-    public void setProvince(String province) {
+    public void setProvince(Long province) {
         this.province = province;
     }
 

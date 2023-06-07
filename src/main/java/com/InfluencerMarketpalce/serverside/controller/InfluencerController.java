@@ -48,8 +48,8 @@ public class InfluencerController {
     }
 
     @PutMapping("/profile")
-    public ResponseMessage editProfile(@RequestBody Map<String, Object> param){
-        return influencerService.editProfile(param);
+    public ResponseMessage editProfile(@RequestBody EditProfileInfluencer request){
+        return influencerService.editProfile(request);
     }
 
     @PutMapping("/profile/photo")

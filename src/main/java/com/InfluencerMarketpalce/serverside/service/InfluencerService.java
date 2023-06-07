@@ -69,38 +69,37 @@ public class InfluencerService extends ResponseStatus {
         return data;
     }
 
-    public ResponseMessage editProfile(Map<String, Object> param){
+    public ResponseMessage editProfile(EditProfileInfluencer request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
         String name = authentication.getName();
         User user = userRepository.findByUsername(name);
-        Optional<Influencer> temp = influencerRepository.findAllByEmail(param.get("email").toString());
+        Optional<Influencer> temp = influencerRepository.findAllByEmail(request.getEmail());
         if (temp.isPresent() && temp.get().getEmail() != user.getInfluencer().getEmail()) {
-            return new ResponseMessage<>("Error -  Email Already Registered", param);
+            return new ResponseMessage<>("Error -  Email Already Registered", request.getEmail());
         }
         Influencer influencer = new Influencer();
         influencer.setId(user.getId());
-        influencer.setFullname(param.get("fullname").toString());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        influencer.setBirthDate(LocalDate.parse(param.get("birthDate").toString(), formatter));
-        influencer.setCity(param.get("city").toString());
-        influencer.setEmail(param.get("email").toString());
-        influencer.setDetailAddress(param.get("detailAddress").toString());
-        ResponseData<IndonesiaLocationResponse> indonesiaLocationResponse = indonesiaLocationService.searchProvince(param.get("province").toString());
+        influencer.setFullname(request.getFullname());
+        influencer.setBirthDate(request.getBirthDate());
+        influencer.setCity(request.getCity());
+        influencer.setEmail(request.getEmail());
+        influencer.setDetailAddress(request.getDetailAddress());
+        ResponseData<IndonesiaLocationResponse> indonesiaLocationResponse = indonesiaLocationService.searchProvince(request.getProvince());
         JSONObject data = new JSONObject(indonesiaLocationResponse);
         String tempProvince = data.optString("data");
         JSONObject jsonProv = new JSONObject(tempProvince);
         influencer.setProvince(jsonProv.optString("name"));
-        influencer.setFacebook(param.get("facebook").toString());
-        influencer.setYoutube(param.get("youtube").toString());
-        influencer.setInstagram(param.get("instagram").toString());
-        influencer.setTiktok(param.get("tiktok").toString());
+        influencer.setFacebook(request.getFacebook());
+        influencer.setYoutube(request.getYoutube());
+        influencer.setInstagram(request.getInstagram());
+        influencer.setTiktok(request.getTiktok());
 //        Set<InfluencerType> temp_type = influenceTypeRepository.findByName(request.getInfluenceType());
 //        influencer.setInfluenceTypes(temp_type);
 //        influencer.setCampaigns(user.getInfluencer().getCampaigns());
         Job job = jobRepository.findByIdJob("I");
         influencer.setJob(job);
         influencerRepository.save(influencer);
-        return new ResponseMessage<>("Influencer Profile Updated", param);
+        return new ResponseMessage<>("Influencer Profile Updated", request);
     }
 
     public ResponseMessage editProfilePoto(ChangeProfilePhotoRequest request){
